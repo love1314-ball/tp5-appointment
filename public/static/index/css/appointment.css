@@ -1,0 +1,66 @@
+.image img {
+	width: 100%;
+	height: 200px;
+}
+
+.numerical {}
+
+.count {
+	width: 90px;
+}
+
+.count .add,
+.count input,
+.count .reduce {
+	float: left;
+	margin-right: -1px;
+	position: relative;
+	z-index: 0;
+}
+
+.count .add,
+.count .reduce {
+	height: 23px;
+	width: 17px;
+	border: 1px solid #e5e5e5;
+	background: #f0f0f0;
+	text-align: center;
+	line-height: 23px;
+	color: #444;
+}
+
+.count .add:hover,
+.count .reduce:hover {
+	color: #f50;
+	z-index: 3;
+	border-color: #f60;
+	cursor: pointer;
+}
+
+.count input {
+	width: 50px;
+	height: 15px;
+	line-height: 15px;
+	border: 1px solid #aaa;
+	color: #343434;
+	text-align: center;
+	padding: 4px 0;
+	background-color: #fff;
+	z-index: 2;
+}
+
+
+.input-label {
+	display: inline-block;
+	text-align: right;
+	    width: 23%;
+}
+.top-wire{
+	border-top-style:double;
+}
+.below-wire{
+	border-bottom-style:double;
+}
+.submit{
+	width: 100%;
+}

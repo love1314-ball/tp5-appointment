@@ -1,0 +1,14 @@
+.begin-finish{
+    font-size: 0.8em;
+    color: red;
+}
+.image img{
+    widows: 150px;
+    height: 150px;
+}
+.detail{
+    margin-bottom: 10%;
+}
+.massive{
+    margin-bottom: 5%;
+}

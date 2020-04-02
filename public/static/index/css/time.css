@@ -1,0 +1,11 @@
+.decide{
+    margin-left: -5%;
+}
+.none-s{
+    color: rgba(255, 255, 255,0.7);
+}
+  .available{
+      text-align: center;
+      margin-top: 5%;
+      color: red;
+  }

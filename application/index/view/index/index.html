@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>我是首页</title>
+    <link rel="stylesheet" href="/static/index/css/mui.css">
+    <link rel="stylesheet" href="/static/index/css/mui.min.css">
+    <script src="/static/index/js/mui.js"></script>
+    <script src="/static/index/js/mui.min.js"></script>
+    <!-- 自己引入的css -->
+    <link rel="stylesheet" href="/static/index/css/home.css">
+
+</head>
+
+<body>
+    <header class="mui-bar mui-bar-nav">
+        <h1 class="mui-title">我是首页</h1>
+    </header>
+    <div class="mui-content">
+        <div class="list">
+            {foreach name="all" item="v" empty="$empty"}
+            <a class="list-left scenic" href="{:url('index/index/time',['id'=>$v.id])}">
+                <div class="image">
+                    <img src="{$v.img}" alt=""><br>
+                    {$v.name}
+                </div>
+            </a>
+            {/foreach}
+        </div>
+    </div>
+    <!--底部导航开始-->
+    <nav class="mui-bar mui-bar-tab">
+        <div onclick="index()" class="mui-tab-item">
+            <span>首页</span>
+        </div>
+        <a onclick="mi()" class="mui-tab-item">
+            <span class="mui-tab-label">我的</span>
+        </a>
+    </nav>
+    <!--底部导航结束-->
+</body>
+
+</html>
+<script type="text/javascript">
+function mi(){
+  window.setTimeout("window.location='{:url('index/Mi/index')}'" , 100);
+}
+</script>

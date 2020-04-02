@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>订单那详细</title>
+    <link rel="stylesheet" href="/static/index/css/mui.css">
+    <link rel="stylesheet" href="/static/index/css/mui.min.css">
+    <script src="/static/index/js/mui.js"></script>
+    <script src="/static/index/js/mui.min.js"></script>
+    <!-- 自己引入的css -->
+    <link rel="stylesheet" href="/static/index/css/detail.css">
+
+</head>
+
+<body>
+    <header class="mui-bar mui-bar-nav">
+        <a class="mui-icon" href="javascript:history.back();"><</a>
+        <h1 class="mui-title">订单详细</h1>
+    </header>
+    <div class="mui-content">
+        <ul class="mui-table-view detail">
+            {foreach name="all" item="v" key="ke" }
+            <li class="mui-table-view-cell mui-media massive">
+                <a>
+                    <div class="mui-media-body">
+                        订单单号：{$v.order}
+                        <p class='mui-ellipsis'>下单姓名：{$v.user_name}</p>
+                        <p class='mui-ellipsis'>身份证号：{$v.identity}</p>
+                        <p class='mui-ellipsis'>下单时间：{$v.addtime}</p>
+                        <p class='mui-ellipsis'>有效日期：<span class="begin-finish">{$v.begin} ~ {$v.finish}</span></p>
+                        <p class='mui-ellipsis'>票数X：{$v.ticket}</p>
+                        <p class='mui-ellipsis'>是否发烧：
+                            {if $v.temperature eq 0}
+                            否
+                            {else/}
+                            是
+                            {/if}
+                        </p>
+                        <p class='mui-ellipsis'>状态：
+                            {if $v.status eq 0}
+                            正常
+                            {else/}
+                            已销毁
+                            {/if}
+                        </p>
+                        <p class='mui-ellipsis'>景点名字：{$v.name}</p>
+                        <p class='image'><img src="{$v.img}" alt="{$v.name}"></p>
+                    </div>
+                </a>
+            </li>
+            {/foreach}
+        </ul>
+
+
+
+    </div>
+    <!--底部导航开始-->
+    <nav class="mui-bar mui-bar-tab">
+        <a onclick="index()" class="mui-tab-item">
+            <span class="mui-tab-label">首页</span>
+        </a>
+        <a class="mui-tab-item">
+            <span class="mui-tab-label">我的</span>
+        </a>
+    </nav>
+    <!--底部导航结束-->
+</body>
+
+</html>
+
+<script type="text/javascript">
+    function index() {
+        window.setTimeout("window.location='{:url('index/index/index')}'", 100);
+    }
+</script>

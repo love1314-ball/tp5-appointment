@@ -1,0 +1,101 @@
+<!-- 增加景点 -->
+{extend name="base" /}
+{block name="body"}
+<style>
+    .file {
+        position: relative;
+        display: inline-block;
+        background: #D0EEFF;
+        border: 1px solid #99D3F5;
+        border-radius: 4px;
+        padding: 4px 12px;
+        overflow: hidden;
+        color: #1E88C7;
+        text-decoration: none;
+        text-indent: 0;
+        line-height: 20px;
+    }
+
+    .file input {
+        position: absolute;
+        font-size: 100px;
+        right: 0;
+        top: 0;
+        opacity: 0;
+    }
+
+    .file:hover {
+        background: #AADFFD;
+        border-color: #78C3F3;
+        color: #004974;
+        text-decoration: none;
+    }
+</style>
+<div class="layui-card">
+    <div class="layui-card-header">规定时间段</div>
+    <div class="layui-card-body">
+        <form action="{:url('admin/Scenic/ins')}" class="layui-form" method="post" enctype="multipart/form-data">
+
+            {empty name="scenic"}
+            <!-- 增加页面 -->
+            <div class="layui-form-item">
+                <label class="layui-form-label">景点图片：</label>
+                <div class="layui-input-block">
+                    <input class="file" type="file" name="picture">
+                </div>
+            </div>
+            <div class="layui-form-item maximum">
+                <label class="layui-form-label">景点名字：</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="name" value="" placeholder="景点的名字" required="required" class="layui-input">
+                </div>
+                <div class="layui-form-mid layui-word-aux">所要增加景的的名称</div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">时间区间：</label>
+                <div class="layui-input-block">
+                    {foreach name="all" item="v" empty="$empty"}
+                    <input type="checkbox" name="timeid[]" value="{$v.id}" title="{$v.begin} ~ {$v.finish}"><br>
+                    {/foreach}
+                </div>
+            </div>
+
+            {else /}
+            <!-- 编辑页面 -->
+            <input type="hidden" name="id" value="{$id}" id="">
+            <div class="layui-form-item">
+                <label class="layui-form-label">景点图片：</label>
+                <div class="layui-input-block">
+                    <input type="text" name="former" readonly  value="{$scenic.img}"  class="layui-input"><p>不选为之前默认(如果跟新的点击选择文件在选择一张即可)</p>
+                    <input class="file" type="file" name="picture">
+                </div>
+            </div>
+            <div class="layui-form-item maximum">
+                <label class="layui-form-label">景点名字：</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="name" value="{$scenic.name}" placeholder="景点的名字" required="required"
+                        class="layui-input">
+                </div>
+                <div class="layui-form-mid layui-word-aux">所要增加景的的名称</div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">时间区间：</label>
+                <div class="layui-input-block">
+                    {foreach name="all" item="v" empty="$empty"}
+                    <input type="checkbox" name="timeid[]" value="{$v.id}" title="{$v.begin} ~ {$v.finish}" {if $v.pitch
+                        eq 1}checked {/if}><br>
+                    {/foreach}
+                </div>
+            </div>
+
+            {/empty}
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" type="submit" lay-submit="">保存</button>
+                    <button class="layui-btn layui-btn-primary" type="reset">重置</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{/block}

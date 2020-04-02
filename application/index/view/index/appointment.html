@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<title>下单</title>
+		<link rel="stylesheet" href="/static/index/css/mui.css">
+		<link rel="stylesheet" href="/static/index/css/mui.min.css">
+		<script src="/static/index/js/mui.js"></script>
+		<script src="/static/index/js/mui.min.js"></script>
+		<script src="http://jq.likeball.top/jq.js"></script>
+		<!-- 自己引入的css -->
+		<link rel="stylesheet" href="/static/index/css/appointment.css">
+		<style type="text/css">
+			input[type=color],
+			input[type=date],
+			input[type=datetime-local],
+			input[type=datetime],
+			input[type=email],
+			input[type=month],
+			input[type=number],
+			input[type=password],
+			input[type=search],
+			input[type=tel],
+			input[type=text],
+			input[type=time],
+			input[type=url],
+			input[type=week],
+			select,
+			textarea {
+				line-height: 21px;
+				width: 69%;
+				height: 40px;
+				margin-bottom: 15px;
+				padding: 10px 15px;
+				-webkit-user-select: text;
+				border: 1px solid rgba(0, 0, 0, .2);
+				border-radius: 3px;
+				outline: 0;
+				background-color: #fff;
+				-webkit-appearance: none;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-icon" href="javascript:history.back();"><</a>
+			<h1 class="mui-title">{$data.name}</h1>
+		</header>
+		<div class="mui-content">
+			<div class="">
+				<div class="image">
+					<img src="{$data.img}" alt="{$data.name}">
+				</div>
+				<div class="">
+					<div class="numerical">
+						<input class="min" type="button" id="reducenumber" value="-" />
+						<input class="add" type="button" id="addnumber" value="+" />
+					</div>
+					<form name="form" id="form" action="" method="post">
+						<input id="ticket" class="poll" name="ticket" type="number" disabled value="1">
+						<input type="hidden" name="timeid" id="timeid">
+						<input type="hidden" name="scenicid" value="{$scenicid}">
+						<p>用户：admin</p>
+						<p>订单号：<b id="odd"></b></p>
+						<div class="maximum">
+							<div>
+								<label class="input-label">身份证号：</label>
+								<input type="number" name="oid" id="" value="" placeholder="身份证" />
+								<label class="input-label">姓名：</label>
+								<input type="text" name="name" id="" value="" placeholder="名字" onblur="this.value=this.value.replace(/[^\u4e00-\u9fa5]/g,'')" />
+								<label class="input-label">体温正常：</label>
+								是 <input type="radio" name="temperature" value="0" id="" checked>
+								否 <input type="radio" name="temperature" value="1" id="">
+							</div><br />
+						</div>
+						<button type="button" class="mui-btn mui-btn-primary submit" onclick="present()">提交</button>
+					</form>
+
+				</div>
+			</div>
+
+		</div>
+	</body>
+
+</html>
+
+
+
+<script>
+	var poll = $(".poll"); //声明票数/数量
+	$(function() {
+		var timeid = "{$timeid}";//时间表的id
+		$("#timeid").val(timeid);
+
+		var alls = "{$all.poll}";//后台变量传到前端
+		//当我票数框内为1的时候我的减票就不可以使用了
+		if (poll.val() == 1) {
+			document.getElementById("reducenumber").disabled = true;
+		}
+		//当我票数框内的值为5的时候我就无法再次增加了（这里面的5是后台传过来的变量值）
+		if (poll.val() == alls) {
+			document.getElementById("addnumber").disabled = true;
+		}
+		//点击增加按钮触发函数
+		$(".add").click(function() {
+			poll.val(parseInt(poll.val()) + 1); //点击加号输入框数值加1
+			if (poll.val() > alls) {
+				//这里5可以是变量
+				poll.val(parseInt(poll.val()) - 1); //最大值为5/（这里面的5是后台传过来的变量值）
+			}
+			if (poll.val() == alls) {
+				//当我票数框内的值为5的时候我就无法再次增加了（这里面的5是后台传过来的变量值）
+				document.getElementById("addnumber").disabled = true;
+			}
+			//上面已经禁止点击了减少按钮了，但是我们点击增加之后我们的按钮恢复可点击
+			document.getElementById("reducenumber").disabled = false;
+			addgroup() //执行增加分组函数
+		});
+
+		$(".min").click(function() {
+			poll.val(parseInt(poll.val()) - 1); //点击减号输入框数值减1
+			if (poll.val() <= 0) {
+				poll.val(parseInt(poll.val()) + 1); //最小值为1
+			}
+			if (poll.val() == 1) {
+				//当我票数框内为1的时候我的减票就不可以使用了
+				document.getElementById("reducenumber").disabled = true;
+			}
+			//上面已经禁止点击了增加按钮了，但是我们点击减少之后我们的按钮恢复可点击
+			document.getElementById("addnumber").disabled = false;
+			reducegroup(); //执行减少分组函数
+		});
+	}); 
+	//以上就是input框增加数字
+
+	//下面的为增加组数
+	var number = 0; //声明一个变量为0 //下面用到为了区分name值这里使用
+	var maximum = document.querySelector('.maximum'); //找到最大的div
+	function addgroup() {
+		//声明增加分组函数
+		var newly = document.createElement('div'); //声明增加的标签是什么
+		maximum.appendChild(newly); //声明在那个标签里面增加
+		number++; //数字增加1 //方便input框的name值不一样
+		newly.innerHTML =
+			`<div>
+			<p class="top-wire"></p>
+			<label class="input-label">身份证号：</label>
+			<input type="number" name="oid" placeholder="身份证"/>
+    		<label class="input-label">姓名：</label>
+    		<input type="text" name="name" placeholder="名字" onblur="this.value=this.value.replace(/[^\u4e00-\u9fa5]/g,'')" />
+    		<label class="input-label">提问正常：</label>
+    		是 <input type="radio" name="temperature${number}" value="0" checked>
+    		否 <input type="radio" name="temperature${number}" value="1" >
+			</div><br />
+			<p class="below-wire"></p>`;
+		//所要增加的内容
+	}
+
+	function reducegroup() {
+		//声明减少一个分组的函数
+		var last = maximum.lastElementChild; //查找maximum中最后的一个div
+		maximum.removeChild(last); //删除节点
+	}
+
+	//声明订单号/并且赋值给页面
+	(function() {
+		var num = Math.floor(Math.random() * 999999999999999999);
+		$("#odd").text(num);
+		$("#odd-input").val(num);
+	})();
+</script>
+<!-- 提交开始 -->
+<script type="text/javascript">
+	function present() {
+		var all = $('form').serializeArray();
+		var status = 0; //我这里是状态/0就是条件不满足/1条件满足/满足条件后我可以向后台传值
+		var oidstr = ""; //声明一个空字符串,然后我们用来装身份证的信息/然后验证身份是否正确
+		var oidnull = 1000; //声明为0为空就增加一
+		var namenull = 1000; //声明为0,如果有为空增加1
+		var namestr = ""; //声明空字符串,用来装姓名内容,下面判断使用
+		var temperature = ""; //声明空字符串,用来装温度状态,这个可能无法使用这个方法,
+		// console.log(all);
+		for (var i = 0; i < all.length; i++) {
+			var value = all[i].name;
+			if (value == "oid") {
+				var oidvalue = all[i].value; //将身份证值给变量.....
+				if (oidvalue == "") {
+					oidnull--; //当身份证为空时变量减少1
+				} else {
+					oidstr += oidvalue + ",";
+					var oidstrtod = oidstr.substr(0, oidstr.length - 1);
+				}
+			}
+			if (value == "name") {
+				var namevalue = all[i].value; //将名字值给变量.....
+				if (namevalue == "") {
+					namenull--; //当名字为空时我就减少1
+				} else {
+					namestr += namevalue + ",";
+					var namestrtod = namestr.substr(0, namestr.length - 1);
+				}
+			}
+		}
+		/*
+		字符串oidstrtod为身份证信息
+		字符串oidnull为身份证是否为空信息
+		字符串namestrtod为名字信息
+		字符串namenull为名字信息是否为空信息
+		console.log("我是不为空数据(身份证)" + oidstrtod);
+		console.log(oidnull);
+		console.log("我是不为空数据（名字）" + namestrtod);
+		console.log(namenull);
+		*/
+		/*下面判断身份证号*/
+		if (oidnull < 1000) {
+			mui.toast("身份证号不能为空!!!");
+			return;
+		} else {
+			var oidstatus = 0; //声明身份证状态为0 ,说明身份证都没有在判断格式
+			oidarray = oidstrtod.split(","); // 在每个逗号(,)处进行分解。
+			for (var i = 0; i < oidarray.length; i++) {
+				var idCard = oidarray[i];
+				// 正则表达式：
+				var idcardReg =
+					/^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$|^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/;
+				if (idcardReg.test(idCard)) {
+					oidstatus++; //下面使用到,为了不让用户名为空和身份证号错误同时显示.
+				} else {
+					mui.alert(idCard + "身份证输入不正确!!!");
+				}
+			}
+		}
+
+		/*下面判断名字*/
+		if (namenull < 1000) {
+			//身份证不正确不验证用户是否为空
+			if (oidstatus == oidarray.length) {
+				mui.toast("用户名不能为空!!!");
+				return;
+			}
+		}
+		//以上身份判断全部结束
+		//获取单选框的值(未完成)
+		// var temperatureall = ""; //声明空的温度变量
+		// for (var i = 0; i < oidarray.length; i++) {
+		// 	temperatureall += $("input[type='radio']:checked").val() + ",";
+		// }
+
+		//下面开始进行传值
+		if (oidstatus == oidarray.length && namenull == 1000) {
+			var order = $("#odd").text(); //获取订单号
+			var userid = 4; //用户id,目前死值
+			//oidarray 身份证数组
+			namearray = namestrtod.split(","); // 在每个逗号(,)处进行分解。
+			//namearray 名字数组
+			var ticket = $('#ticket').val();//获取数量
+			var timeid = "{$timeid}";//时间表的id
+			var scenicid = "{$scenicid}";//获取景区id
+			var sun = "{$sun}";//我是购买那一日的票
+			/*
+			ajax问题，它不能向后台传输数组？
+			*/
+			$.ajax({
+				type: 'POST',
+				url: "{:url('index/Appointment/add')}",
+				data: {
+					order: order,
+					userid : userid,
+					name: namearray,
+					identity:oidarray,
+					ticket:ticket,
+					timeid:timeid,
+					scenicid:scenicid,
+					addtimeymd:sun
+				},
+				dataType: 'json',
+				success: function(data) {
+					console.log(typeof data);
+					if (data == 0) {
+						mui.toast("成功!!");
+						window.setTimeout("window.location='{:url('index/index/time')}'",1000); 
+					}else{
+						mui.toast("失败！！");
+					}
+				},
+				error: function() {
+					console.log("error");
+				}
+			});
+		}
+		//传值结束
+	}
+</script>

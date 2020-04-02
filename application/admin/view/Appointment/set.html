@@ -1,0 +1,35 @@
+<!-- 预约设置 -->
+{extend name="base" /}
+{block name="body"}
+<div class="layui-card">
+    <div class="layui-card-header">设置数据</div>
+    <div class="layui-card-body">
+        <form action="{:url('admin/Appointment/setup')}" class="layui-form" method="post">
+
+           
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">* 设置票数</label>
+                <div class="layui-input-inline">
+                    <input type="number" name="poll" value="{$all.poll}" placeholder="输入票数" required="required" class="layui-input">
+                </div>
+                <div class="layui-form-mid layui-word-aux">设置规定每次最大限购票数(最好不大于6)</div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">* 规定天数</label>
+                <div class="layui-input-inline">
+                    <input type="number" name="day" value="{$all.day}" placeholder="输入天数" required="required" class="layui-input">
+                </div>
+                <div class="layui-form-mid layui-word-aux">设置预约最近的几天(最好不大于3天)</div>
+            </div>
+          
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" type="submit" lay-submit="">保存</button>
+                    <button class="layui-btn layui-btn-primary" type="reset">重置</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{/block}

@@ -1,0 +1,26 @@
+.list{
+    display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+    width: 100%;
+    margin-top: 4%;
+}
+.list a{
+    display: inline-block;
+}
+.list-left{
+    width: 50%;
+    text-align-last: center;
+}
+
+.list-right{
+    width: 50%;
+    text-align-last: center;
+}
+.list img{
+    width: 156px;
+    height: 111px;
+}
+.scenic{
+    margin-top: 5%;
+}

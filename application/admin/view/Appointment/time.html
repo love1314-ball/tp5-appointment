@@ -1,0 +1,69 @@
+<!-- 时间设置 -->
+{extend name="base" /}
+{block name="body"}
+<div class="layui-card">
+    <div class="layui-card-header">规定时间段</div>
+    <div class="layui-card-body">
+        <form action="{:url('admin/Appointment/timeadd')}" class="layui-form" method="post">
+            <!-- 这个是增加页面 -->
+            {empty name="all"}
+            <div class="layui-form-item maximum">
+                <label class="layui-form-label">开始时间：</label>
+                <div class="layui-input-inline">
+                    <input type="time" name="begin" value="" placeholder="开始时间" required="required" class="layui-input">
+                </div>
+                <div class="layui-form-mid layui-word-aux">从几点开始预订</div>
+
+                <label class="layui-form-label">结束时间：</label>
+                <div class="layui-input-inline">
+                    <input type="time" name="finish" value="" placeholder="结束时间" required="required"
+                        class="layui-input">
+                </div>
+                <div class="layui-form-mid layui-word-aux">结束时间</div>
+
+                <label class="layui-form-label">设置票数：</label>
+                <div class="layui-input-inline">
+                    <input type="number" name="ticket" value="" placeholder="剩余票数" required="required"
+                        class="layui-input">
+                </div>
+                <div class="layui-form-mid layui-word-aux">剩余票数</div>
+            </div>
+            <!-- 这个是编辑页面 -->
+            {else /}
+
+            <input type="hidden" name="id" value="{$all.id}">
+
+
+            <div class="layui-form-item maximum">
+                <label class="layui-form-label">开始时间：</label>
+                <div class="layui-input-inline">
+                    <input type="time" name="begin" value="{$all.begin}" placeholder="开始时间" required="required"
+                        class="layui-input">
+                </div>
+                <div class="layui-form-mid layui-word-aux">从几点开始预订</div>
+
+                <label class="layui-form-label">结束时间：</label>
+                <div class="layui-input-inline">
+                    <input type="time" name="finish" value="{$all.finish}" placeholder="结束时间" required="required"
+                        class="layui-input">
+                </div>
+                <div class="layui-form-mid layui-word-aux">结束时间</div>
+
+                <label class="layui-form-label">设置票数：</label>
+                <div class="layui-input-inline">
+                    <input type="number" name="ticket" value="{$all.ticket}" placeholder="剩余票数" required="required"
+                        class="layui-input">
+                </div>
+                <div class="layui-form-mid layui-word-aux">剩余票数</div>
+            </div>
+            {/empty}
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" type="submit" lay-submit="">保存</button>
+                    <button class="layui-btn layui-btn-primary" type="reset">重置</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{/block}

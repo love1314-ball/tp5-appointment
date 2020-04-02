@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<title>我是预定时间列表</title>
+	<link rel="stylesheet" href="/static/index/css/mui.css">
+	<link rel="stylesheet" href="/static/index/css/mui.min.css">
+	<script src="/static/index/js/mui.js"></script>
+	<script src="/static/index/js/mui.min.js"></script>
+	<script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+	<!-- 自己引入的css -->
+	<link rel="stylesheet" href="/static/index/css/time.css">
+	<style>
+		.mui-bar-nav~.mui-content {
+			padding-top: 0px;
+		}
+	</style>
+</head>
+
+<body>
+
+	<header class="mui-bar mui-bar-nav">
+		<a class="mui-icon" href="http://www.tp5-appointment.com/index/index/index.html">
+			< </a>
+				<h1 class="mui-title">预定时间</h1>
+	</header>
+	<!-- -头部结束 -->
+	<div style="height:50px;"></div>
+	<div id="segmentedControl" class="mui-segmented-control">
+
+		{foreach name="list" item="vo" key="k" }
+		<a class="mui-control-item" href="{:url('index/index/time', ['sun' => $vo])}">
+			<!-- sun -->
+			<p class="none-s">{$vo}</p>
+		</a>
+		<a href="{:url('index/index/time', ['sun' => $vo])}">{$vo}</a>
+		{/foreach}
+
+
+
+	</div>
+	<!-- 中间导航结束 -->
+	<div class="mui-content">
+		{empty name="scenic"}
+		<ul class="mui-table-view">
+			{foreach name="data" item="v" key="ke" }
+			{if $v.output eq 1}
+			<!-- ----判断是否为当天开始--- -->
+			{if $same eq 0}
+			<!-- 如果output为1，那么我们的数据显示，代表数据库中有这个时间段的id -->
+					{if $present gt $v.finish}
+					<!-- $present > finish -->
+					<!-- 如果当前时间大于，finish结束时间，那么我这个无法进行选项 -->
+						<li class="mui-table-view-cell">
+							<a>
+								{$v.begin}-{$v.finish}
+								<span class="mui-badge mui-badge-danger">已过期</span>
+							</a>
+						</li>
+					{/if}
+
+					{if $v.newticket eq 0}
+					<!-- $present > finish -->
+					<!-- 如果当前时间大于，finish结束时间，那么我这个无法进行选项 -->
+						<li class="mui-table-view-cell">
+							<a>
+								{$v.begin}-{$v.finish}
+								<span class="mui-badge mui-badge-danger">已售空</span>
+							</a>
+						</li>
+					{/if}
+
+					{if $present lt $v.finish}
+					<!-- $present <  finish -->
+					<!-- 如果当前时间小于，finish结束时间，可以选择 -->
+						<li class="mui-table-view-cell">
+							<a href="{:url('index/index/appointment', ['timeid' => $v.id , 'sun'=>$sun ])}">
+								{$v.begin}-{$v.finish}
+								<span class="mui-badge mui-badge-success">剩余{$v.newticket}/张</span>
+							</a>
+						</li>
+					{/if}
+			{/if}
+				
+			{if $same eq 1}
+				<li class="mui-table-view-cell">
+					<a href="{:url('index/index/appointment', ['timeid' => $v.id , 'sun'=>$sun])}">
+						{$v.begin}-{$v.finish}
+						<span class="mui-badge mui-badge-success">剩余{$v.newticket}/张</span>
+					</a>
+				</li>
+			{/if}
+			<!-- ----判断是否为当天结束--- -->
+
+			{/if}
+			{/foreach}
+		</ul>
+		{else/}
+		<p class="available">暂无数据</p>
+		{/empty}
+	</div>
+	<!-- 内容结束 -->
+</body>
+
+</html>
+<script>
+
+
+
+</script>

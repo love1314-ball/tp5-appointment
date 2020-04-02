@@ -1,0 +1,47 @@
+<!-- 查看时间管理 -->
+{extend name="base" /}
+{block name="body"}
+<div class="layui-card">
+	<div class="layui-card-body">
+
+		<table class="layui-table layui-form">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>电影名字</th>
+					<th>图片浏览</th>
+					<th>购买人名字</th>
+					<th>购买人身份证</th>
+					<th>开始时间</th>
+					<th>结束时间</th>
+					<th>订单状态</th>
+					<th>是否发烧</th>
+				</tr>
+			</thead>
+			<tbody>
+				{foreach name="all" item="v" empty="$empty"}
+				<tr>
+					<td>{$v.id}</td>
+					<td>{$v.name}</td>
+					<td>
+						<img src="{$v.img}" alt="{$v.name}" width="80px" height="50px">
+					</td>
+					<td>{$v.user_name}</td>
+					<td>{$v.identity}</td>
+					<td>{$v.begin}</td>
+					<td>{$v.finish}</td>
+					<td>
+						{if $v.status eq 0}正常
+						{else/}已销毁{/if}
+					</td>
+					<td>
+					{if $v.temperature eq 0}否
+					{else/}是{/if}
+					</td>
+				</tr>
+				{/foreach}
+			</tbody>
+		</table>
+	</div>
+</div>
+{/block}
