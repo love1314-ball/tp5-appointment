@@ -19,7 +19,7 @@ class Scenic extends AdminBase
     public function index()
  {
 
-        $all = Db::name( 'scenic' )->order('id desc')->select();
+        $all = Db::name( 'scenic' )->order( 'id desc' )->select();
         foreach ( $all as $key => $value ) {
             $all[$key]['addtime'] = date( 'Y-m-d H:i:s', $value['addtime'] );
         }
@@ -141,8 +141,29 @@ class Scenic extends AdminBase
         }
     }
 
+    //查看景点
 
+    public function look()
+ {
+        $id = input( 'id' );
+        $time = date('Y-m-d',time());//当日的日期
+        $all = Db::name('scenic')->where('id',$id)->find();
+        $timeid = explode(",", $all['timeid']);
+        for ($i=0; $i <count($timeid) ; $i++) { 
+            $where['timeid'] = $timeid[$i];
+            $where['addtimeymd'] = $time;
+            $where['scenicid'] = $id;
+            $quantum[] = Db::name('time')->where('id',$timeid[$i])->find();//计算每个时间点购买的数量
+            $quantum[$i]['purchase'] = Db::name('order')->where($where)->count();//将每个时间点购买的数量，再返回给数组、
+        }
+        foreach ($quantum as $key => $value) {
+            $quantum[$key]['begin'] = date('H:i',$value['begin']);//开始时间
+            $quantum[$key]['finish'] = date('H:i',$value['finish']);//结束时间
 
-    
+        }
+       $this->assign('all',$all);
+       $this->assign('quantum',$quantum);
+       return $this->fetch('look');
+    }
 
 }

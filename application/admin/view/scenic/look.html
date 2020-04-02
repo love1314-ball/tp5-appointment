@@ -1,0 +1,39 @@
+<!-- 景点管理 -->
+{extend name="base" /}
+{block name="body"}
+<style>
+	.image img {
+		widows: 45px;
+		height: 45px;
+	}
+</style>
+<div class="layui-card">
+	<div class="layui-card-body">
+		<div>这里的购买数量为当日的</div>
+		<table class="layui-table layui-form">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>景点名字</th>
+					<th>图片</th>
+					<th>时间段</th>
+					<th>购买数量</th>
+				</tr>
+			</thead>
+			<tbody>
+                {foreach name="quantum" item="v" empty="$empty"}
+                <tr>
+					<td>{$v.id}</td>
+					<td>{$all.name}</td>
+					<td class="image">
+						<img src="{$all.img}" alt="{$all.name}">
+					</td>
+					<td>{$v.begin} ~ {$v.finish}</td>
+					<td>{$v.purchase}</td>
+				</tr>
+				{/foreach}
+			</tbody>
+		</table>
+	</div>
+</div>
+{/block}

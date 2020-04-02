@@ -35,10 +35,9 @@
 					<td>{$v.timeid}</td>
 					<td>{$v.addtime}</td>
 					<td>
-						<a href="#"
+						<a href="{:url('admin/Scenic/look', ['id' => $v.id] )}"
 							class="layui-btn layui-btn-xs layui-btn-normal">
-							<i class="layui-icon">￠</i>
-							查看</a>
+							<i class="layui-icon">ℹ</i>详细</a>
 						<a href="{:url('admin/Scenic/add', ['up' => $v.id] )}"
 							class="layui-btn layui-btn-xs layui-btn-normal"><i class="fa fa-edit"></i>
 							编辑</a>
