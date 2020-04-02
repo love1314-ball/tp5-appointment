@@ -1,8 +1,4 @@
-# OpenBMS 开源后台管理系统
 
-全称 Open Background Management System 开源后台管理系统
-
-基于 [ThinkPHP5](http://www.thinkphp.cn) 和 [Layui](https://www.layui.com) 开发
 
 ### 环境要求
 
@@ -26,9 +22,9 @@
 
 ### 在线演示
 
-[http://www.openbms.cn/admin](http://www.openbms.cn/admin)
+[http://www.tp5-appointment.com/admin/index/index.html](http://www.tp5-appointment.com/admin/index/index.html)
 
-账号：demo 密码：123456
+账号：admin 密码：123456
 
 ### 版权信息
 
