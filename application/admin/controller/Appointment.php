@@ -17,7 +17,7 @@ class Appointment extends AdminBase
     public function index()
  {
 
-        $all = Db::name( 'order' )->order( 'id desc' )->group( 'order' )->select();
+        $all = Db::name( 'order' )->order( 'addtimeymd desc' )->group( 'order' )->select();
         foreach ( $all as $k => $v ) {
             $status = Db::name( 'time' )->where( 'id', $v['timeid'] )->find();
             $all[$k]['status'] = $status['status'];
@@ -25,7 +25,9 @@ class Appointment extends AdminBase
         }
         $time = new Time;
         $all = $time->order( $all );
-        $this->assign( 'all', $all );
+        $this->assign( 'all', $all ); 
+        // dump($all);
+        // exit;
         return $this->fetch( 'index' );
     }
     //删除订单
@@ -205,11 +207,12 @@ class Appointment extends AdminBase
         foreach ( $all as $key => $value ) {
             $all[$key]['identity'] = substr_replace( $value['identity'], '****', 5, 9 );
             $all[$key]['addtime'] = date( 'Y-m-d H:i:s', $value['addtime'] );
-            $all[$key]['begin'] = date( 'y-m-d H:i', $time['begin'] );
-            $all[$key]['finish'] = date( 'y-m-d H:i', $time['finish'] );
+            $all[$key]['begin'] = $all[$key]['addtimeymd'].date( ' H:i', $time['begin'] );
+            $all[$key]['finish'] = $all[$key]['addtimeymd'].date( ' H:i', $time['finish'] );
             $all[$key]['name'] = $scenic['name'];
             $all[$key]['img'] = $scenic['img'];
         }
+       
         $this->assign( 'all', $all );
         return $this->fetch( 'order' );
     }
