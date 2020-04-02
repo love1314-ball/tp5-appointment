@@ -8,11 +8,6 @@
 * MBstring PHP Extension
 * CURL PHP Extension
 
-### 下载方式
-
-* [官网首页](http://www.openbms.cn)
-* [Github](https://github.com/chenjiacheng/openbms)
-* [码云](https://gitee.com/openbms/openbms)
 
 ### 安装使用
 
