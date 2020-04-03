@@ -34,7 +34,8 @@ class Article extends AdminBase
             $where['status'] = $param['status'];
         }
         $list = model('article')->with('category')->order('id desc')->where($where)
-            ->paginate(config('page_number'), false, ['query' => $param]);
+            ->paginate(config('page_number'), false, ['query' => $param]); 
+            // dump($param);exit;
         return $this->fetch('index', ['list' => $list]);
     }
 

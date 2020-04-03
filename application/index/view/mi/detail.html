@@ -16,39 +16,46 @@
 
 <body>
     <header class="mui-bar mui-bar-nav">
-        <a class="mui-icon" href="javascript:history.back();"><</a>
-        <h1 class="mui-title">订单详细</h1>
+        <a class="mui-icon" href="javascript:history.back();">
+            < </a>
+                <h1 class="mui-title">订单详细</h1>
     </header>
     <div class="mui-content">
         <ul class="mui-table-view detail">
+            {foreach name="all" item="vo" key="ke" }
+            {/foreach}
+            <li class="mui-table-view-cell mui-media massive">
+                <div class="mui-media-body">
+                    订单单号：{$vo.order}
+                    <p class='mui-ellipsis'>景点名字：{$vo.name}</p>
+                    <p class='image'><img src="{$vo.img}" alt="{$vo.name}"></p>
+                </div>
+            </li>
+
+
             {foreach name="all" item="v" key="ke" }
             <li class="mui-table-view-cell mui-media massive">
-                <a>
-                    <div class="mui-media-body">
-                        订单单号：{$v.order}
-                        <p class='mui-ellipsis'>下单姓名：{$v.user_name}</p>
-                        <p class='mui-ellipsis'>身份证号：{$v.identity}</p>
-                        <p class='mui-ellipsis'>下单时间：{$v.addtime}</p>
-                        <p class='mui-ellipsis'>有效日期：<span class="begin-finish">{$v.begin} ~ {$v.finish}</span></p>
-                        <p class='mui-ellipsis'>票数X：{$v.ticket}</p>
-                        <p class='mui-ellipsis'>是否发烧：
-                            {if $v.temperature eq 0}
-                            否
-                            {else/}
-                            是
-                            {/if}
-                        </p>
-                        <p class='mui-ellipsis'>状态：
-                            {if $v.status eq 0}
-                            正常
-                            {else/}
-                            已销毁
-                            {/if}
-                        </p>
-                        <p class='mui-ellipsis'>景点名字：{$v.name}</p>
-                        <p class='image'><img src="{$v.img}" alt="{$v.name}"></p>
-                    </div>
-                </a>
+                <div class="mui-media-body">
+                    <p class='mui-ellipsis'>下单姓名：{$v.user_name}</p>
+                    <p class='mui-ellipsis'>身份证号：{$v.identity}</p>
+                    <p class='mui-ellipsis'>下单时间：{$v.addtime}</p>
+                    <p class='mui-ellipsis'>有效日期：<span class="begin-finish">{$v.begin}~{$v.finish}</span></p>
+                    <p class='mui-ellipsis'>票数X：{$v.ticket}</p>
+                    <p class='mui-ellipsis'>是否发烧：
+                        {if $v.temperature eq 0}
+                        否
+                        {else/}
+                        是
+                        {/if}
+                    </p>
+                    <p class='mui-ellipsis'>状态：
+                        {if $v.status eq 0}
+                        正常
+                        {else/}
+                        已销毁
+                        {/if}
+                    </p>
+                </div>
             </li>
             {/foreach}
         </ul>

@@ -90,6 +90,7 @@ class Scenic extends AdminBase
                 $data['timeid'] = implode( ',', $timeid );
                 $data['addtime'] = time();
                 $data['id'] = $id;
+                $data['introduce'] = input('introduce');
                 $update = Db::name( 'scenic' )->update( $data );
                 if ( $update ) {
                     $this->success( '更新成功', 'admin/Scenic/index' );
@@ -115,6 +116,7 @@ class Scenic extends AdminBase
                 $timeid = input( 'timeid/a' );
                 $data['timeid'] = implode( ',', $timeid );
                 $data['img'] = $picture;
+                $data['introduce'] = input('introduce');
                 $data['addtime'] = time();
                 $add = Db::name( 'scenic' )->insert( $data );
                 if ( $add ) {

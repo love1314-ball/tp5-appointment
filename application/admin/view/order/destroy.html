@@ -1,0 +1,64 @@
+<!-- 订单核销 -->
+{extend name="base" /}
+{block name="body"}
+<style>
+    .name {
+        display: block;
+        widows: 150px;
+
+    }
+</style>
+<div class="layui-card">
+    <div class="layui-card-body">
+
+        <div class="layui-card-header">
+            <form action="{:url('admin/Order/index')}" class="layui-form" method="get">
+                <div class="layui-form-item">
+
+                    <div class="layui-input-inline">
+                        <input type="number" name="orderid" value="" placeholder="填写订单"  class="layui-input">
+                    </div>
+
+                    <div class="layui-input-inline">
+                        <input type="date" name="period" value="{$period}" class="layui-input">
+                    </div>
+
+                    <div class="layui-input-inline">
+                        <select name="cid">
+                            <option value="">选择景点</option>
+                            {foreach name="scenic" item="v" empty="$empty"}
+                            <option value="{$v.id}"> {$v.name}</option>
+                            {/foreach}
+                        </select>
+                    </div>
+                    
+                    <div class="layui-input-inline" style="width: 50px;">
+                        <button class="layui-btn layui-btn-primary ajax-search"><i class="fa fa-search"></i></button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+
+
+
+        <table class="layui-table layui-form">
+			<thead>
+				<tr>
+                    <th>ID</th>
+					<th>景点名字</th>
+					<th>订单单号</th>
+					<th>订单开始时间</th>
+					<th>订单结束时间</th>
+					<th>订单状态</th>
+					<th>操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				
+			</tbody>
+		</table>
+
+    </div>
+</div>
+{/block}

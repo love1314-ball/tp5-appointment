@@ -17,7 +17,28 @@ class Appointment extends AdminBase
     public function index()
  {
 
-        $all = Db::name( 'order' )->order( 'addtimeymd desc' )->group( 'order' )->select();
+        $order = input( 'order' );
+        $phone = input( 'phone' );
+        $user_name = input( 'user_name' );
+        $status = 0;
+        if ( $order ) {
+            $where['order'] = $order;
+            $status = 1;
+        }
+        if ( $phone ) {
+            $where['phone'] = $phone;
+            $status = 1;
+        }
+        if ( $user_name ) {
+            $where['user_name'] = $user_name;
+            $status = 1;
+        }
+
+        if ( $status == 1 ) {
+            $all = Db::name( 'order' )->where( $where )->order( 'addtimeymd desc' )->group( 'order' )->select();
+        } else {
+            $all = Db::name( 'order' )->order( 'addtimeymd desc' )->group( 'order' )->select();
+        }
         foreach ( $all as $k => $v ) {
             $status = Db::name( 'time' )->where( 'id', $v['timeid'] )->find();
             $all[$k]['status'] = $status['status'];
@@ -25,8 +46,9 @@ class Appointment extends AdminBase
         }
         $time = new Time;
         $all = $time->order( $all );
-        $this->assign( 'all', $all ); 
-        // dump($all);
+        $this->assign( 'all', $all );
+
+        // dump( $all );
         // exit;
         return $this->fetch( 'index' );
     }
@@ -154,7 +176,8 @@ class Appointment extends AdminBase
         $alls = $all;
         //下面要用到
         $time = new Time;
-        $all = $time->switch( $all ); 
+        $all = $time->switch( $all );
+
         $this->assign( 'list', $all );
         return $this->fetch( 'look' );
     }
@@ -203,7 +226,7 @@ class Appointment extends AdminBase
         $all = Db::name( 'order' )->where( 'order', $order )->select();
         $timeid = $all[0]['timeid'];
         $time = Db::name( 'time' )->where( 'id', $timeid )->find();
-        $scenic = Db::name('scenic')->where('id',$all[0]['scenicid'])->find();
+        $scenic = Db::name( 'scenic' )->where( 'id', $all[0]['scenicid'] )->find();
         foreach ( $all as $key => $value ) {
             $all[$key]['identity'] = substr_replace( $value['identity'], '****', 5, 9 );
             $all[$key]['addtime'] = date( 'Y-m-d H:i:s', $value['addtime'] );
@@ -212,7 +235,7 @@ class Appointment extends AdminBase
             $all[$key]['name'] = $scenic['name'];
             $all[$key]['img'] = $scenic['img'];
         }
-       
+
         $this->assign( 'all', $all );
         return $this->fetch( 'order' );
     }

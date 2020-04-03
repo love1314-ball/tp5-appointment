@@ -52,4 +52,36 @@ class Order extends AdminBase
         return $this->fetch( 'index' );
     }
 
+    //核销销毁订单
+    public function destroy()
+    {   
+        $period = input('period');
+        if ($period) {
+            $period = $period;
+        }else {
+            $period = date('Y-m-d',time());
+        }
+        
+        $scenic = Db::name('scenic')->select();
+
+        $where['addtimeymd'] = $period;
+        $order = Db::name('order')->where($where)->group('order')->select();
+
+        dump($order);exit;   
+
+        $this->assign('scenic',$scenic);
+        $this->assign('period',$period);
+        return $this->fetch( 'destroy' );
+    }
+
+    //订单销毁执行
+    public function destroyup()
+    {
+        
+        
+    }
+
+
+
+
 }
