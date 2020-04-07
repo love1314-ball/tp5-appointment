@@ -26,7 +26,7 @@
 
 ### 在线演示
 
-[http://www.openbms.cn/admin](http://www.openbms.cn/admin)
+[http://tp5-appointment.likeball.top/admin](http://tp5-appointment.likeball.top/admin)
 
 账号：demo 密码：123456
 
