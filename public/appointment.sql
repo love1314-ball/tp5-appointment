@@ -10,31 +10,10 @@ Target Server Type    : MYSQL
 Target Server Version : 50726
 File Encoding         : 65001
 
-Date: 2020-04-07 09:49:21
+Date: 2020-04-07 10:29:11
 */
 
 SET FOREIGN_KEY_CHECKS=0;
-
--- ----------------------------
--- Table structure for ob_ad
--- ----------------------------
-DROP TABLE IF EXISTS `ob_ad`;
-CREATE TABLE `ob_ad` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `category` varchar(32) NOT NULL DEFAULT '0' COMMENT '分类',
-  `name` varchar(255) NOT NULL DEFAULT '' COMMENT '分类名称',
-  `description` varchar(255) DEFAULT '' COMMENT '描述',
-  `url` varchar(255) DEFAULT '' COMMENT '链接',
-  `target` varchar(10) DEFAULT '' COMMENT '打开方式',
-  `image` varchar(255) DEFAULT '' COMMENT '图片',
-  `sort_order` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
-  `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '状态',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='广告';
-
--- ----------------------------
--- Records of ob_ad
--- ----------------------------
 
 -- ----------------------------
 -- Table structure for ob_admin
@@ -150,51 +129,6 @@ INSERT INTO `ob_admin_log` VALUES ('66', '1', 'admin', 'Mozilla/5.0 (Windows NT 
 INSERT INTO `ob_admin_log` VALUES ('67', '1', 'admin', 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36', '127.0.0.1', 'http://www.tp5-appointment.com/admin/auth/editrule.html?id=1', 'POST', 'json', '{\"id\":\"1\",\"name\":\"\\u6587\\u7ae0\",\"url\":\"\",\"icon\":\"fa fa-book\",\"type\":\"auth\",\"index\":\"0\",\"sort_order\":\"2\",\"pid\":\"0\"}', '修改了权限规则', '1586219467');
 
 -- ----------------------------
--- Table structure for ob_article
--- ----------------------------
-DROP TABLE IF EXISTS `ob_article`;
-CREATE TABLE `ob_article` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `cid` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '分类ID',
-  `title` varchar(255) NOT NULL DEFAULT '' COMMENT '标题',
-  `image` varchar(255) DEFAULT '' COMMENT '图片',
-  `author` varchar(255) DEFAULT '' COMMENT '作者',
-  `summary` text COMMENT '简介',
-  `photo` text COMMENT '相册',
-  `content` longtext COMMENT '内容',
-  `view` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '点击量',
-  `is_top` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否置顶',
-  `is_hot` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否推荐',
-  `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '状态',
-  `sort_order` int(11) NOT NULL DEFAULT '100' COMMENT '排序',
-  `keywords` varchar(255) DEFAULT '' COMMENT '关键字',
-  `description` varchar(255) DEFAULT '' COMMENT '描述',
-  `create_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
-  `update_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='文章';
-
--- ----------------------------
--- Records of ob_article
--- ----------------------------
-INSERT INTO `ob_article` VALUES ('1', '1', '初识模块化开发工具', '', '', '初识模块化开发工具：git 是分布式代码管理工具，管理代码的npm 是包管理工具，管理插件、工具啊，是个转换器，他是哪来的了，他是伴随node下载下来的，版本也是伴随node变化；node 是个后台的环境；首先安装node，然后用命令安装browserify：npm install -g brows ...', '', '', '0', '0', '0', '1', '100', '', '', '1541840580', '1541840580');
-INSERT INTO `ob_article` VALUES ('2', '1', 'window.open方法被浏览器拦截的处理方式', '', '', '问题现象 当我们在一个 ajax 回调中执行 window.open 方法时，新页面会被浏览器拦截。 原因 在 Chrome 的安全机制里，非用户直接触发的 window.open 方法，是会被拦截的。 处理 $(\'#jump-btn\').on(\'click\', function () { // 打 ...', '', '', '0', '0', '0', '1', '100', '', '', '1541840601', '1541840601');
-INSERT INTO `ob_article` VALUES ('3', '1', '理解JavaScript中的柯里化', '', '', '函数式编程是一种编程风格，这种编程风格就是试图将传递函数作为参数（即将作为回调函数）和返回一个函数，但没有函数副作用（函数副作用即会改变程序的状态）。 有很多语言采用这种编程风格，其中包括JavaScript、Haskell、Clojure、Erlang和Scala等一些很流行的编程语言。 ...', '', '', '0', '0', '0', '1', '100', '', '', '1541840625', '1541840625');
-INSERT INTO `ob_article` VALUES ('4', '1', '小程序开发框架', '', '', '小程序开发框架，支持百度小程序、微信小程序、支付宝小程序 ...', '', '', '0', '0', '0', '1', '100', '', '', '1541840645', '1541840645');
-INSERT INTO `ob_article` VALUES ('5', '1', 'JavaScript异步、事件循环与消息队列、微任务与宏任务', '', '', '关于JavaScript异步、事件循环与消息队、微任务与宏任务的总结 ...', '', '', '0', '0', '0', '1', '100', '', '', '1541840663', '1541840663');
-INSERT INTO `ob_article` VALUES ('6', '1', '关于Array中的srot()方法和compare()方法', '', '', 'Array中的srot()方法 sort()方法是用来重排序的方法。在默认情况下，sort()方法按升序排列数组项 即最小的值位于最前面，最大的值排在最后面。 我们看看官方是怎么说的： arrayObj.srot(sortFunction) 参数 arrayObj 必选项。任意Array对象 sor ...', '', '', '0', '0', '0', '1', '100', '', '', '1541840681', '1541840681');
-INSERT INTO `ob_article` VALUES ('7', '1', '使用Arcgis进行画面(线)并计算大小(长度)', '', '', '在使用Arcgis API for JavaScript进行做地图开发的过程中，在地图进行画线、画面是经常使用的功能。本文主要介绍这一功能。 本文适用Arcgis API版本：Arcgis API for JS 4.x以上。 方案分析： 方案分析： 首先要初始化&nbsp;map&nbsp;和&nbsp;mapView（2D m ...', '', '', '0', '0', '0', '1', '100', '', '', '1541840700', '1541840700');
-INSERT INTO `ob_article` VALUES ('8', '1', 'sass使用中出现的问题', '', '', '问题一：ruby按照官方文档安装后更换gem源时，报错Error fetching https://gems.ruby-china.org/: bad response Not Found 404 (https://gems.ruby-china.org/specs.4.8.gz)；不知就里，在网上 ...', '', '', '0', '0', '0', '1', '100', '', '', '1541840718', '1541840718');
-INSERT INTO `ob_article` VALUES ('9', '1', 'xss 跨站脚本攻击', '', '', '攻击原理 XSS（cross-site scripting跨域脚本攻击）攻击是最常见的Web攻击，它允许恶意web用户将代码植入到提供给其它用户使用的页面中。 xss 与其他的攻击方式相比缺点明显，如下： 1、耗时间 2、有一定几率不成功 3、没有相应的软件来完成自动化攻击 4、前期需要基本的htm ...', '', '', '0', '0', '0', '1', '100', '', '', '1541840736', '1541840736');
-INSERT INTO `ob_article` VALUES ('10', '2', 'JSON解析', '', '', '以下为网络上搜集的关于JSON的资料，整合为随笔记录，供以后回顾。 百度：https://baike.baidu.com/item/JSON/2462549?fr=aladdin 一. 数据格式 1.数组方式： [ {\"key1\": \"value1\"}, {\"key2\": \"value2\"} ] 2 ...', '', '', '0', '0', '0', '1', '100', '', '', '1541840756', '1541840756');
-INSERT INTO `ob_article` VALUES ('11', '1', 'visual studio2017 创建Vue项目', '', '', '1:打开Visual studio 2017后 按图片操作新建项目 也可以使用快捷键Ctrl+Shift+N 进入创建项目页面 2:选择JavaScript 里的Node.js创建对应的Vue项目 如果没有javaScript对应的node.js选项 打开最下面的visual studio安装程序  ...', '', '', '0', '0', '0', '1', '100', '', '', '1541840778', '1541840778');
-INSERT INTO `ob_article` VALUES ('12', '1', 'javascript  数组 常用方法', '', '', '前言 学学忘忘 闲来做个笔记 整理下数组常用方法。 Array 数组常用方法 创建数组的基本方式有两种 1.第一种是使用Array构造函数， var arr = new Array(); 使用构造函数方式的话&nbsp;var arr = new Array(20),则表示创建了一个lenght值为20的数组 ...', '', '', '0', '0', '0', '1', '100', '', '', '1541840793', '1541840793');
-INSERT INTO `ob_article` VALUES ('13', '1', '学了两天 react，乱讲一下学习思路，顺便弄了一个脚手架', '', '', '之前一直用 vue 做一些小项目，最近接触了一个项目是用 react 做前端，虽然本身是做后端开发的，但是前端还是要了解一点的。 现在的项目基本上都是前后端分离的，后端就先不提了。前端的框架也是层出不穷，使用最多的就是 angular、vue、react 。angular 是前几年用的比较多，最近好 ...', '', '', '0', '0', '0', '1', '100', '', '', '1541840808', '1541840808');
-INSERT INTO `ob_article` VALUES ('14', '2', 'PHP 中的CURL 模拟表单的post提交', '', '', '废话不多说啦，直接上代码： 这里需要注意的是： 要想以 x-www-form-urlencoded 方式发送，最关键是发送的数据格式。 方式from-data试发送的数据用的是array格式，而方式为 x-www-form-urlencoded 时需要用key=value&key=value的格式发 ...', '', '', '0', '0', '0', '1', '100', '', '', '1541840846', '1541840846');
-INSERT INTO `ob_article` VALUES ('15', '2', ' PHP解决跨域问题', '', '', '在做项目的过程中经常需要跨域访问。这里主要介绍一下 PHP 中怎么解决跨域问题。 1、允许所有域名访问 2、允许单个域名访问 3、允许多个域名访问 在实际项目中最好指定能跨域访问的域名，增加安全性。可以写在一个公共类里面，封装一个方法调用。 ...', '', '', '0', '0', '0', '1', '100', '', '', '1541840863', '1541840863');
-INSERT INTO `ob_article` VALUES ('16', '1', '接口技术的实现:规范用户类的成员与类型', '', '', '', '', '', '0', '0', '0', '1', '100', '', '', '1541840882', '1546139921');
-
--- ----------------------------
 -- Table structure for ob_auth_group
 -- ----------------------------
 DROP TABLE IF EXISTS `ob_auth_group`;
@@ -247,10 +181,6 @@ CREATE TABLE `ob_auth_rule` (
 -- ----------------------------
 -- Records of ob_auth_rule
 -- ----------------------------
-INSERT INTO `ob_auth_rule` VALUES ('1', '0', '文章', '', 'fa fa-book', '2', 'auth', '0', '1');
-INSERT INTO `ob_auth_rule` VALUES ('2', '0', '会员', '', 'fa fa-users', '3', 'auth', '0', '1');
-INSERT INTO `ob_auth_rule` VALUES ('3', '0', '扩展', '', 'fa fa-puzzle-piece', '4', 'auth', '0', '1');
-INSERT INTO `ob_auth_rule` VALUES ('4', '0', '设置', '', 'fa fa-gear', '5', 'auth', '0', '1');
 INSERT INTO `ob_auth_rule` VALUES ('5', '0', '权限', '', 'fa fa-lock', '6', 'nav', '0', '1');
 INSERT INTO `ob_auth_rule` VALUES ('6', '0', '控制台', 'admin/index/index', '', '1', 'auth', '0', '1');
 INSERT INTO `ob_auth_rule` VALUES ('7', '1', '分类管理', 'admin/category/index', 'fa fa-navicon', '2', 'nav', '1', '1');
@@ -425,21 +355,6 @@ CREATE TABLE `ob_scenic` (
 INSERT INTO `ob_scenic` VALUES ('9', '古城', '84,85', '1585994215', '/static/scenicimg/20200404/7394d61d0769ebe5c81f3f0f90268c1e.png', '古城镇，有着奇妙的历史', '8', '3');
 INSERT INTO `ob_scenic` VALUES ('10', '埃菲尔铁塔', '88,89,90', '1585994894', '/static/scenicimg/20200404/aae9e5b588e9272c2ae274237e221633.jpg', '埃菲尔铁塔爱情', '9', '4');
 INSERT INTO `ob_scenic` VALUES ('8', '圆明园', '82,83', '1585994188', '/static/scenicimg/20200404/61cb8498b17b75d127aeae1b1f177690.jpg', '圆明园仅剩', '8', '2');
-
--- ----------------------------
--- Table structure for ob_set
--- ----------------------------
-DROP TABLE IF EXISTS `ob_set`;
-CREATE TABLE `ob_set` (
-  `id` int(11) DEFAULT NULL COMMENT '设计表的id',
-  `poll` varchar(255) DEFAULT NULL COMMENT '设置没人每天最多定的票数',
-  `day` varchar(255) DEFAULT NULL COMMENT '设置显示预定几天的'
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of ob_set
--- ----------------------------
-INSERT INTO `ob_set` VALUES ('1', '9', '2');
 
 -- ----------------------------
 -- Table structure for ob_system

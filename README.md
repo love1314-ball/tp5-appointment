@@ -4,30 +4,6 @@
 
 基于 [ThinkPHP5](http://www.thinkphp.cn) 和 [Layui](https://www.layui.com) 开发
 
-
-
-![image-20200407094744287](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20200407094744287.png)
-
-
-
-![image-20200407094755718](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20200407094755718.png)
-
-
-
-![image-20200407094804662](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20200407094804662.png)
-
-
-
-![image-20200407094814502](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20200407094814502.png)
-
-
-
-![image-20200407094826017](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20200407094826017.png)
-
-
-
-
-
 ### 环境要求
 
 * Apache / Nginx / IIS
@@ -52,7 +28,7 @@
 
 [http://www.openbms.cn/admin](http://www.openbms.cn/admin)
 
-账号：demo密码：123456
+账号：demo 密码：123456
 
 ### 版权信息
 
