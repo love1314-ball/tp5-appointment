@@ -14,11 +14,10 @@ class Scenic extends AdminBase
  {
         parent::_initialize();
     }
-    //景点首页
+    //预约/ 景点配置 / 首页
 
     public function index()
  {
-
         $all = Db::name( 'scenic' )->order( 'id desc' )->select();
         foreach ( $all as $key => $value ) {
             $all[$key]['addtime'] = date( 'Y-m-d H:i:s', $value['addtime'] );
@@ -27,20 +26,17 @@ class Scenic extends AdminBase
         return $this->fetch( 'index' );
     }
 
-    //增加景点/更改
+    //预约/ 景点配置 / 增加景点
 
     public function add()
  {
 
         $up = input( 'up' );
-        //增加页面
         if ( $up ) {
-            //更新页面
             $scenic = Db::name( 'scenic' )->where( 'id', $up )->find();
             $timeid = explode( ',', $scenic['timeid'] );
             for ( $i = 0; $i < count( $timeid ) ;
             $i++ ) {
-
                 $time[] = Db::name( 'times' )->where( 'id', $timeid[$i] )->find();
             }
             $this->assign( 'time', $time );
@@ -50,57 +46,49 @@ class Scenic extends AdminBase
         return $this->fetch( 'add' );
     }
 
-    //我是插入数据库操作
+    //预约/ 景点配置 / 增加景点 / 插入数据库操作
 
     public function ins()
  {
         $id = input( 'id' );
 
+        $picture = '';
+        if ( $_FILES['picture']['name'] == '' ) {
+            $picture = input( 'former' );
+        } else {
+            $file = request()->file( 'picture' );
+            $info = $file->move( ROOT_PATH . '/public/static/scenicimg/' );
+            if ( $info ) {
+                $Nmae = $info->getSaveName();
+                $site = str_replace( '\\', '/', $Nmae );
+                $picture = '/static/scenicimg/' . $site;
+            } else {
+                echo $file->getError();
+            }
+        }
+        $data['img'] = $picture;
+        $data['name'] = input( 'name' );
+        $data['introduce'] = input( 'introduce' );
+        $data['poll'] = input( 'poll' );
+        $data['day'] = input( 'day' );
+        $data['addtime'] = time();
+        $time['ticket'] = input( 'ticket' );
+        $brgin = input( 'brgin/a' );
+        $finish = input( 'finish/a' );
+        $time['status'] = 0;
+
         if ( $_POST ) {
             if ( $id ) {
-
-                $delid = Db::name('scenic')->where('id',$id)->value('timeid');
-                $delid = explode(",", $delid);
-                
-                for ($i=0; $i <count($delid) ; $i++) { 
-                  Db::name('times')->delete($delid[$i]);//将之前插入时间的内容删除，因为更新了内容
-                }
-                //我是更新
-                $picture = '';
-                if ( $_FILES['picture']['name'] == '' ) {
-                    $picture = input( 'former' );
-                } else {
-                    $file = request()->file( 'picture' );
-                    $info = $file->move( ROOT_PATH . '/public/static/scenicimg/' );
-                    if ( $info ) {
-                        $Nmae = $info->getSaveName();
-                        $site = str_replace( '\\', '/', $Nmae );
-                        $newaddress = '/static/scenicimg/' . $site;
-                        $picture = $newaddress;
-                    } else {
-                        echo $file->getError();
-                    }
-                }
-
                 $data['id'] = $id;
-                $data['img'] = $picture;
-                $data['name'] = input( 'name' );
-                $data['introduce'] = input( 'introduce' );
-                $data['poll'] = input( 'poll' );
-                $data['day'] = input( 'day' );
-                $data['addtime'] = time();
-                //time表插入
-                $time['ticket'] = input( 'ticket' );
-                $brgin = input( 'brgin/a' );
-                //开始时间
-                $finish = input( 'finish/a' );
-                //结束时间
-                $time['status'] = 0;
-                //用不到
 
+                $delid = Db::name( 'scenic' )->where( 'id', $id )->value( 'timeid' );
+                $delid = explode( ',', $delid );
+                for ( $i = 0; $i < count( $delid ) ;
+                $i++ ) {
+                    Db::name( 'times' )->delete( $delid[$i] );
+                }
                 for ( $i = 0; $i <count( $brgin ) ;
                 $i++ ) {
-
                     $time['brgin'] = $brgin[$i];
                     $time['finish'] = $finish[$i];
                     $timeid[] = Db::name( 'times' )->insertGetId( $time );
@@ -116,37 +104,8 @@ class Scenic extends AdminBase
                 //更新结束
             } else {
                 //我是插入/插入开始
-
-                $picture = '';
-                $file = request()->file( 'picture' );
-                $info = $file->move( ROOT_PATH . '/public/static/scenicimg/' );
-                if ( $info ) {
-                    $Nmae = $info->getSaveName();
-                    $site = str_replace( '\\', '/', $Nmae );
-                    $newaddress = '/static/scenicimg/' . $site;
-                    $picture = $newaddress;
-                } else {
-                    echo $file->getError();
-                }
-
-                $data['img'] = $picture;
-                $data['name'] = input( 'name' );
-                $data['introduce'] = input( 'introduce' );
-                $data['poll'] = input( 'poll' );
-                $data['day'] = input( 'day' );
-                $data['addtime'] = time();
-                //time表插入
-                $time['ticket'] = input( 'ticket' );
-                $brgin = input( 'brgin/a' );
-                //开始时间
-                $finish = input( 'finish/a' );
-                //结束时间
-                $time['status'] = 0;
-                //用不到
-
                 for ( $i = 0; $i <count( $brgin ) ;
                 $i++ ) {
-
                     $time['brgin'] = $brgin[$i];
                     $time['finish'] = $finish[$i];
                     $timeid[] = Db::name( 'times' )->insertGetId( $time );
@@ -161,11 +120,10 @@ class Scenic extends AdminBase
                 }
             }
             //插入结束
-
         }
     }
 
-    //删除
+    //预约/ 景点配置 / 删除
 
     public function del()
  {
@@ -178,7 +136,7 @@ class Scenic extends AdminBase
         }
     }
 
-    //查看景点
+    //预约/ 景点配置 / 查看
 
     public function look()
  {
@@ -199,7 +157,7 @@ class Scenic extends AdminBase
             $quantum[$i]['purchase'] = Db::name( 'order' )->where( $where )->count();
             //将每个时间点购买的数量，再返回给数组、
         }
-       
+
         $this->assign( 'all', $all );
         $this->assign( 'quantum', $quantum );
         return $this->fetch( 'look' );

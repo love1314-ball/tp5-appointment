@@ -1,111 +1,112 @@
 <!DOCTYPE html>
 <html>
 
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-		<title>下单</title>
-		<link rel="stylesheet" href="/static/index/css/mui.css">
-		<link rel="stylesheet" href="/static/index/css/mui.min.css">
-		<script src="/static/index/js/mui.js"></script>
-		<script src="/static/index/js/mui.min.js"></script>
-		<script src="http://jq.likeball.top/jq.js"></script>
-		<!-- 自己引入的css -->
-		<link rel="stylesheet" href="/static/index/css/appointment.css">
-		<style type="text/css">
-			input[type=color],
-			input[type=date],
-			input[type=datetime-local],
-			input[type=datetime],
-			input[type=email],
-			input[type=month],
-			input[type=number],
-			input[type=password],
-			input[type=search],
-			input[type=tel],
-			input[type=text],
-			input[type=time],
-			input[type=url],
-			input[type=week],
-			select,
-			textarea {
-				line-height: 21px;
-				width: 69%;
-				height: 40px;
-				margin-bottom: 15px;
-				padding: 10px 15px;
-				-webkit-user-select: text;
-				border: 1px solid rgba(0, 0, 0, .2);
-				border-radius: 3px;
-				outline: 0;
-				background-color: #fff;
-				-webkit-appearance: none;
-			}
-		</style>
-	</head>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<title>下单</title>
+	<link rel="stylesheet" href="/static/index/css/mui.css">
+	<link rel="stylesheet" href="/static/index/css/mui.min.css">
+	<script src="/static/index/js/mui.js"></script>
+	<script src="/static/index/js/mui.min.js"></script>
+	<script src="http://jq.likeball.top/jq.js"></script>
+	<!-- 自己引入的css -->
+	<link rel="stylesheet" href="/static/index/css/appointment.css">
+	<style type="text/css">
+		input[type=color],
+		input[type=date],
+		input[type=datetime-local],
+		input[type=datetime],
+		input[type=email],
+		input[type=month],
+		input[type=number],
+		input[type=password],
+		input[type=search],
+		input[type=tel],
+		input[type=text],
+		input[type=time],
+		input[type=url],
+		input[type=week],
+		select,
+		textarea {
+			line-height: 21px;
+			width: 69%;
+			height: 40px;
+			margin-bottom: 15px;
+			padding: 10px 15px;
+			-webkit-user-select: text;
+			border: 1px solid rgba(0, 0, 0, .2);
+			border-radius: 3px;
+			outline: 0;
+			background-color: #fff;
+			-webkit-appearance: none;
+		}
+	</style>
+</head>
 
-	<body>
-		<header class="mui-bar mui-bar-nav">
-			<a class="mui-icon" href="javascript:history.back();"><</a>
-			<h1 class="mui-title">{$data.name}</h1>
-		</header>
-		<div class="mui-content">
-			<div class="">
-				<div class="image">
-					<img src="{$data.img}" alt="{$data.name}">
-				</div>
-				<div class="">
-					<div class="numerical">
-						<input class="min" type="button" id="reducenumber" value="-" />
-						<input class="add" type="button" id="addnumber" value="+" />
+<body>
 
-						<!-- <div class="mui-numbox" data-numbox-step='10' data-numbox-min='0' data-numbox-max='100'>
-							<button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
-							<input class="mui-numbox-input" type="number" />
-							<button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
-						</div> -->
-					</div>
-					<form name="form" id="form" action="" method="post">
-						<div class="poll-number"> 票数：<input id="ticket" class="poll" name="ticket" type="number" disabled value="1"></div>
-						
-						<input type="hidden" name="timeid" id="timeid">
-						<input type="hidden" name="scenicid" value="{$scenicid}">
-						<p>用户：admin</p> 
-						<p>订单号：<b id="odd"></b></p>
-						<div class="maximum">
-							<div>
-								
-								<label class="input-label">身份证号：</label>
-								<input type="number" name="oid" id="" value="" placeholder="身份证" />
+	<header class="mui-bar mui-bar-nav">
+		<a class="mui-icon" href="javascript:history.back();">
+			< </a>
+				<h1 class="mui-title">{$data.name}</h1>
+	</header>
 
-								
-								<label class="input-label">手机号：</label>
-								<input type="number" name="phone" id="" value="" placeholder="手机号" />
+	<div class="mui-content">
+		<div class="">
 
-								<label class="input-label">姓名：</label>
-								<input type="text" name="name" id="" value="" placeholder="名字" onblur="this.value=this.value.replace(/[^\u4e00-\u9fa5]/g,'')" />
-
-								<label class="input-label">体温正常：</label>
-								<input type="radio" name="temperature" value="0" id="" checked>是 
-								<input type="radio" name="temperature" value="1" id="">否
-							</div><br />
-						</div>
-						<button type="button" class="mui-btn mui-btn-primary submit" onclick="present()">提交</button>
-					</form>
-
-				</div>
+			<div class="image">
+				<img src="{$data.img}" alt="{$data.name}">
 			</div>
 
+			<div class="">
+				<div class="numerical">
+					<input class="min" type="button" id="reducenumber" value="-" />
+					<input class="add" type="button" id="addnumber" value="+" />
+				</div>
+				
+				<form name="form" id="form" action="" method="post">
+					<div class="poll-number"> 票数：<input id="ticket" class="poll" name="ticket" type="number" disabled
+							value="1"></div>
+
+					<input type="hidden" name="timeid" id="timeid">
+					<input type="hidden" name="scenicid" value="{$scenicid}">
+					<p>用户：admin</p>
+					<p>订单号：<b id="odd"></b></p>
+					<div class="maximum">
+						<div>
+
+							<label class="input-label">身份证号：</label>
+							<input type="number" name="oid" id="" value="" placeholder="身份证" />
+
+
+							<label class="input-label">手机号：</label>
+							<input type="number" name="phone" id="" value="" placeholder="手机号" />
+
+							<label class="input-label">姓名：</label>
+							<input type="text" name="name" id="" value="" placeholder="名字"
+								onblur="this.value=this.value.replace(/[^\u4e00-\u9fa5]/g,'')" />
+
+							<label class="input-label">体温正常：</label>
+							<input type="radio" name="temperature" value="0" id="" checked>是
+							<input type="radio" name="temperature" value="1" id="">否
+						</div><br />
+					</div>
+					<button type="button" class="mui-btn mui-btn-primary submit" onclick="present()">提交</button>
+				</form>
+
+
+			</div>
 		</div>
-	</body>
+
+	</div>
+</body>
 
 </html>
 
-
-
 <script>
 	var poll = $(".poll"); //声明票数/数量
-	$(function() {
+	$(function () {
 		var timeid = "{$timeid}";//时间表的id
 		$("#timeid").val(timeid);
 
@@ -119,7 +120,7 @@
 			document.getElementById("addnumber").disabled = true;
 		}
 		//点击增加按钮触发函数
-		$(".add").click(function() {
+		$(".add").click(function () {
 			poll.val(parseInt(poll.val()) + 1); //点击加号输入框数值加1
 			if (poll.val() > alls) {
 				//这里5可以是变量
@@ -134,7 +135,7 @@
 			addgroup() //执行增加分组函数
 		});
 
-		$(".min").click(function() {
+		$(".min").click(function () {
 			poll.val(parseInt(poll.val()) - 1); //点击减号输入框数值减1
 			if (poll.val() <= 0) {
 				poll.val(parseInt(poll.val()) + 1); //最小值为1
@@ -147,7 +148,7 @@
 			document.getElementById("addnumber").disabled = false;
 			reducegroup(); //执行减少分组函数
 		});
-	}); 
+	});
 	//以上就是input框增加数字
 
 	//下面的为增加组数
@@ -182,7 +183,7 @@
 	}
 
 	//声明订单号/并且赋值给页面
-	(function() {
+	(function () {
 		var num = Math.floor(Math.random() * 999999999999999999);
 		$("#odd").text(num);
 		$("#odd-input").val(num);
@@ -265,8 +266,8 @@
 
 		if (oidstatus == oidarray.length) {
 			if (phonenull < 1000) {
-			mui.toast("手机号不能为空!!!");
-			return;
+				mui.toast("手机号不能为空!!!");
+				return;
 			} else {
 				var phonestatus = 0; //声明身份证状态为0 ,说明身份证都没有在判断格式
 				phonearray = phonestrtod.split(","); // 在每个逗号(,)处进行分解。
@@ -281,7 +282,7 @@
 				}
 			}
 		}
-		
+
 
 
 
@@ -320,26 +321,26 @@
 				url: "{:url('index/Appointment/add')}",
 				data: {
 					order: order,
-					userid : userid,
+					userid: userid,
 					name: namearray,
-					identity:oidarray,
-					ticket:ticket,
-					timeid:timeid,
-					scenicid:scenicid,
-					addtimeymd:sun,
-					phone:phonearray
+					identity: oidarray,
+					ticket: ticket,
+					timeid: timeid,
+					scenicid: scenicid,
+					addtimeymd: sun,
+					phone: phonearray
 				},
 				dataType: 'json',
-				success: function(data) {
+				success: function (data) {
 					console.log(typeof data);
 					if (data == 0) {
 						mui.toast("成功!!");
-						window.setTimeout("window.location='http://www.tp5-appointment.com/index/mi/status/status/0.html'",1000); 
-					}else{ 
-						mui.toast("失败！！"); 
+						window.setTimeout("window.location='http://www.tp5-appointment.com/index/mi/status/status/0.html'", 1000);
+					} else {
+						mui.toast("失败！！");
 					}
 				},
-				error: function() {
+				error: function () {
 					console.log("error");
 				}
 			});

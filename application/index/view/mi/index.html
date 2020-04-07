@@ -18,23 +18,30 @@
     <header class="mui-bar mui-bar-nav">
         <h1 class="mui-title">个人中心</h1>
     </header>
+
     <div class="mui-content">
+
         <div class="order">订单信息</div>
+        
         <ul class="mui-table-view">
+
             <a href="{:url('index/Mi/status',['status'=>0])}">
-                <li class="mui-table-view-cell">待销毁
+                <li  class="mui-table-view-cell await">待销毁
                     <span class="mui-badge mui-badge-primary">{$deny} /张</span>
                 </li>
             </a>
+
             <a href="{:url('index/Mi/status',['status'=>1])}">
-                <li class="mui-table-view-cell">已销毁
+                <li class="mui-table-view-cell already">已销毁
                     <span class="mui-badge mui-badge-danger">{$are} /张</span>
                 </li>
             </a>
+
         </ul>
         <div class="personage">个人信息</div>
 
         <ul class="mui-table-view">
+
             <li class="mui-table-view-cell mui-media">
                 <a href="javascript:;">
                     <img class="mui-media-object mui-pull-left" src="/static/image/morentouxiang.jpg">
@@ -43,6 +50,7 @@
                     </div>
                 </a>
             </li>
+
         </ul>
 
 

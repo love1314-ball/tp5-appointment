@@ -8,18 +8,15 @@ use think\Session;
 
 class Index extends IndexBase {
 
-    //我是首页
+    //前端 / 首页
 
     public function index() {
-
         $all = Db::name( 'scenic' )->order( 'id desc' )->select();
-
         $this->assign( 'all', $all );
-
         return $this->fetch( 'index' );
     }
 
-    //我是时间那一页
+    //前端 / 预定时间页
 
     public function time() {
 
@@ -31,41 +28,19 @@ class Index extends IndexBase {
         } else {
             $scenicid = session( 'scenicid' );
         }
-        // dump( $scenicid );
-
-        /*
-        获取时间信息的
-        */
         $all = Db::name( 'scenic' )->where( 'id', $scenicid )->find();
         $day = $all['day'];
         $date = date( 'Y-m-d', time() );
-        //获取当天日期
         for ( $i = 0; $i < $day; $i++ ) {
             $list[] = date( 'm-d', strtotime( "$date + $i day" ) );
         }
-        /*
-        获取时间信息结束
-        */
-        /*
-        默认输出时间段开始
-        */
         $data = Db::name( 'scenic' )->where( 'id', $scenicid )->find();
         $timeid = $data['timeid'];
         $timeid = explode( ',', $timeid );
-        
-        for ($i=0; $i < count($timeid) ; $i++) { 
-            $time[] = Db::name('times')->where('id',$timeid[$i])->find();
+        for ( $i = 0; $i < count( $timeid ) ;
+        $i++ ) {
+            $time[] = Db::name( 'times' )->where( 'id', $timeid[$i] )->find();
         }
-        
-        
-        /*
-        默认输出时间段结束
-        */
-
-        /**
-        * 判断当前时间段，然后将票给销毁
-        *  销毁票（时间段到了就销毁）
-        */
         $present = date( 'H:i', time() );
         /*
         获取当前时间的日期，然后去订单里面查找对应的信息，是插入的年月日+开始时间，计算出票数。
@@ -78,9 +53,6 @@ class Index extends IndexBase {
         } else {
             $sun = $year.date( 'm-d', time() );
         }
-
-        
-
         /*
         判断当天的还是下n天的
         */
@@ -92,10 +64,8 @@ class Index extends IndexBase {
             //这个是不是当天，那么过来某个时间点我照样可以选择时间。
         }
         //查找订单时间为当日，或者选择的日期
-
-
         //所有的票数，和时间点（少一个条件，商品的id。否则不知道哪个商品了）
-        foreach ( $time as $k => $v ) { 
+        foreach ( $time as $k => $v ) {
             $where['timeid'] = $v['id'];
             $timeid = $v['id'];
             $where['addtimeymd'] = $sun;
@@ -105,23 +75,18 @@ class Index extends IndexBase {
             $time[$k]['newticket'] = $v['ticket'] - $time[$k]['subtract'];
             //计算出的新的票数
         }
-        // dump( $present );
-        // dump( $data );
-        // exit;
         $this->assign( 'same', $same );
         $this->assign( 'present', $present );
         $this->assign( 'sun', $sun );
         $this->assign( 'list', $list );
-        //获取的是几天信息
         $this->assign( 'all', $all );
-        $this->assign('time',$time);
-        //获取时间信息的
+        $this->assign( 'time', $time );
         return $this->fetch( 'time' );
     }
-    //我是购买那一页
+
+    //前端 / 下单页面
 
     public function appointment() {
-
         $timeid = input( 'timeid' );
         $sun = input( 'sun' );
         if ( $sun ) {
@@ -131,7 +96,6 @@ class Index extends IndexBase {
         }
         $all = Db::name( 'set' )->where( 'id', 1 )->find();
         $scenicid = session( 'scenicid' );
-        //获取景区id
         $data = Db::name( 'scenic' )->where( 'id', $scenicid )->find();
         $this->assign( 'data', $data );
         $this->assign( 'sun', $sun );

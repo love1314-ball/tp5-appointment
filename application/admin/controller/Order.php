@@ -14,20 +14,19 @@ class Order extends AdminBase
  {
         parent::_initialize();
     }
-    //景点首页
 
+
+    //预约/ 统计票数 /
     public function index()
  {
 
         $date = input( 'date' );
         if ( $date ) {
-            $time = $date;
+            $time = $date;//前端传过来的值
         } else {
-            $time = date( 'Y-m-d', time() );
+            $time = date( 'Y-m-d', time() );//如果没有传过来值获取当前时间
         }
-        /*
-        搜索单个景区，一天的售票
-        */
+       
         $all = Db::name( 'scenic' )->select();
         //搜索所有的影片
         foreach ( $all as $key => $value ) {
@@ -41,7 +40,6 @@ class Order extends AdminBase
         /**
         * 搜索所有影片一点售票
         */
-
         $number = 0;
         foreach ( $all as $k => $v ) {
             $number = $number + $v['statistics'];

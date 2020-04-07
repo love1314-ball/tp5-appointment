@@ -1,4 +1,4 @@
-<!-- 增加景点 -->
+<!-- 预约/ 景点配置/ 增加 -->
 {extend name="base" /}
 {block name="body"}
 <style>
@@ -45,7 +45,6 @@
     <div class="layui-card-header">规定时间段</div>
     <div class="layui-card-body">
         <form action="{:url('admin/Scenic/ins')}" class="layui-form" method="post" enctype="multipart/form-data">
-            
             {empty name="id"}
             <!-- 增加页面 -->
             <div class="layui-form-item">
@@ -120,12 +119,12 @@
             </div>
             <button type="button" class="layui-btn layui-btn-normal left" id="add">增加时间规则</button>
             <button type="button" class="layui-btn layui-btn-danger" id="reduce">删除时间规则</button><br><br>
-           
+
             {else /}
             <!-- 编辑页面 -->
 
             <input type="hidden" name="id" value="{$id}" id="">
-            
+
             <div class="layui-form-item">
                 <label class="layui-form-label">景点图片：</label>
                 <div class="layui-input-block">
@@ -157,7 +156,8 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">单购票数：</label>
                 <div class="layui-input-inline">
-                    <input type="number" name="poll" value="{$scenic.poll}" placeholder="输入票数" required="required" class="layui-input">
+                    <input type="number" name="poll" value="{$scenic.poll}" placeholder="输入票数" required="required"
+                        class="layui-input">
                 </div>
                 <div class="layui-form-mid layui-word-aux">设置单次购买票数<i onclick="ticket()" class="explain"><img
                             src="/static/image/tishi.png" alt="说明"></i></div>
@@ -166,7 +166,8 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">规定天数：</label>
                 <div class="layui-input-inline">
-                    <input type="number" name="day" value="{$scenic.day}" placeholder="输入天数" required="required" class="layui-input">
+                    <input type="number" name="day" value="{$scenic.day}" placeholder="输入天数" required="required"
+                        class="layui-input">
                 </div>
                 <div class="layui-form-mid layui-word-aux">设置预约<i onclick="day()" class="explain"><img
                             src="/static/image/tishi.png" alt="说明"></i></div>
@@ -178,7 +179,8 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">规定总票：</label>
                 <div class="layui-input-inline">
-                    <input type="number" name="ticket" value="{$v.ticket}" placeholder="输入景区总票数" required="required" class="layui-input">
+                    <input type="number" name="ticket" value="{$v.ticket}" placeholder="输入景区总票数" required="required"
+                        class="layui-input">
                 </div>
                 <div class="layui-form-mid layui-word-aux">设置景点总票数</div>
             </div>

@@ -1,11 +1,8 @@
-<!-- 预约查看 -->
+<!-- 预约 / 订单查看 -->
 {extend name="base" /}
 {block name="body"}
 <div class="layui-card">
 	<div class="layui-card-body">
-
-
-
 
 		<div class="layui-card-header">
 			<form action="{:url('admin/Appointment/index')}" class="layui-form" method="get">
@@ -29,16 +26,12 @@
 			</form>
 		</div>
 
-
-
-
-
-
-
 		<div class="layui-btn-group">
 			<a href="{:url('admin/Appointment/export')}" class="layui-btn layui-btn-primary"><i class="fa fa-file-excel-o"></i> 导出订单</a>
 		</div>
+
 		<table class="layui-table layui-form">
+
 			<thead>
 				<tr>
 					<th>ID</th>
@@ -52,6 +45,7 @@
 					<th>操作</th>
 				</tr>
 			</thead>
+
 			<tbody>
 				{foreach name="all" item="v" empty="$empty"}
 				<tr>
@@ -69,12 +63,10 @@
 						{if $v.status eq 0}正常
 						{else/}已销毁{/if}
 					</td>
-
 					<td>
 						<a href="{:url('admin/Appointment/order', ['order' => $v.order] )}"
 							class="layui-btn layui-btn-xs layui-btn-normal"><i class="fa fa-edit"></i> 
 							查看</a>
-
 						<a href="{:url('admin/Appointment/orderdel', ['id' => $v.id] )}"
 							class="layui-btn layui-btn-xs layui-btn-danger ajax-delete"><i class="fa fa-trash-o"></i>
 							删除</a>
@@ -82,7 +74,9 @@
 				</tr>
 				{/foreach}
 			</tbody>
+
 		</table>
+		
 	</div>
 </div>
 {/block}

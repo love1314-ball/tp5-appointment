@@ -15,39 +15,44 @@
 </head>
 
 <body>
+
     <header class="mui-bar mui-bar-nav">
         <a class="mui-icon" href="{:url('index/Mi/index')}">
             < </a>
                 <h1 class="mui-title">状态页</h1>
     </header>
+
     <div class="mui-content">
+
         <ul class="mui-table-view content">
             {foreach name="all" item="v" empty="$empty"}
-            <li class="mui-table-view-cell mui-media">
-                <a href="{:url('index/Mi/detail', ['order' => $v.order])}">
-                    <div class="mui-media-body">
-                        景点名字：<span>{$v.name} </span>
-                        <p> 时间段
-                            <span class="begin">{$v.brgin} </span>
-                            ~
-                            <span class="finish">{$v.finish} </span>
-                            <b class="status">
-                                {if $v.status eq 0}
-                                待销毁
-                                {else/}
-                                已销毁
-                                {/if}
-                            </b>
-                        </p>
-                        <p class='mui-ellipsis'>身份证号:{$v.identity}</p>
-                        <p>名字:{$v.user_name}</p>
-                    </div>
-                </a>
-            </li>
+                <li class="mui-table-view-cell mui-media">
+                    <a href="{:url('index/Mi/detail', ['order' => $v.order])}">
+                        <div class="mui-media-body">
+                            景点名字：<span>{$v.name} </span>
+                            <p> 时间段
+                                <span class="begin">{$v.brgin} </span>
+                                ~
+                                <span class="finish">{$v.finish} </span>
+                                <b class="status">
+                                    {if $v.status eq 0}
+                                    待销毁
+                                    {else/}
+                                    已销毁
+                                    {/if}
+                                </b>
+                            </p>
+                            <p class='mui-ellipsis'>身份证号:{$v.identity}</p>
+                            <p>名字:{$v.user_name}</p>
+                        </div>
+                    </a>
+                </li>
             {/foreach}
         </ul>
+
     </div>
     <!--底部导航开始-->
+
     <nav class="mui-bar mui-bar-tab">
         <a onclick="index()" class="mui-tab-item">
             <span class="mui-tab-label">首页</span>
@@ -56,6 +61,7 @@
             <span class="mui-tab-label">我的</span>
         </a>
     </nav>
+    
     <!--底部导航结束-->
 </body>
 

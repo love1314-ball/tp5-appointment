@@ -18,20 +18,24 @@
     <header class="mui-bar mui-bar-nav">
         <h1 class="mui-title">我是首页</h1>
     </header>
+
     <div class="mui-content">
+
         <div class="list">
             {foreach name="all" item="v" empty="$empty"}
-            <a class="list-left scenic" href="{:url('index/index/time',['id'=>$v.id])}">
-                <div class="image">
-                    <span class="name">{$v.name}</span><br>
-                    <img src="{$v.img}" alt="">
-                    <p>介绍：{$v.introduce}</p>
-                   
-                </div>
-            </a>
+                <a class="list-left scenic" href="{:url('index/index/time',['id'=>$v.id])}">
+                    <div class="image">
+                        <span class="name">{$v.name}</span><br>
+                        <img src="{$v.img}" alt="">
+                        <p>介绍：{$v.introduce}</p>
+
+                    </div>
+                </a>
             {/foreach}
         </div>
+
     </div>
+
     <!--底部导航开始-->
     <nav class="mui-bar mui-bar-tab">
         <div onclick="index()" class="mui-tab-item">
@@ -41,12 +45,13 @@
             <span class="mui-tab-label">我的</span>
         </a>
     </nav>
+    
     <!--底部导航结束-->
 </body>
 
 </html>
 <script type="text/javascript">
-function mi(){
-  window.setTimeout("window.location='{:url('index/Mi/index')}'" , 100);
-}
+    function mi() {
+        window.setTimeout("window.location='{:url('index/Mi/index')}'", 100);
+    }
 </script>

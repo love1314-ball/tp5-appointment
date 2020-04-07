@@ -45,37 +45,28 @@ class Appointment extends IndexBase
    }
 
 
-//下载生成的二维码-引用方法1
+//生成二维码
 
 public function qrcode($order) {
         
 	$request = Request::instance();
 	header( 'Content-Type: text/html;charset=utf-8' );
-
 	//引入二维码生成插件
 	vendor( 'phpqrcode.phpqrcode' );
-
-	// 生成的二维码所在目录+文件名
 	$path = 'static/QRcode/';
-	//生成的二维码所在目录
 	if ( !file_exists( $path ) ) {
-
 		mkdir( $path, 0700, true );
 	}
 	$time = time().'.png';
 	//生成的二维码文件名
 	$fileName = $path.$time;
 	//1.拼装生成的二维码文件路径
-
 	$data = 'http://www.tp5-appointment.com/index/mi/destroy?orderid='.$order;
 	//2.生成二维码的数据( 扫码显示该数据 )
-
 	$level = 'L';
 	//3.纠错级别：L、M、Q、H
-
 	$size = 10;
 	//4.点的大小：1到10, 用于手机端4就可以了
-
 	ob_end_clean();
 	//清空缓冲区
 	\QRcode::png( $data, $fileName, $level, $size );
@@ -84,23 +75,6 @@ public function qrcode($order) {
 	$file_name = iconv( 'utf-8', 'gb2312', $time );
 	$file_path = $request->domain().'/'.$fileName;//插入数据库的字段
 	return $file_path;
-	// dump($file_path);
-	// exit;
-	//获取下载文件的大小
-	// $file_size = filesize( $file_path );
-	//
-	// $file_temp = fopen ( $file_path, 'r' );
-	//返回的文件
-	// header( 'Content-type:application/octet-stream' );
-	// //按照字节大小返回
-	// header( 'Accept-Ranges:bytes' );
-	// //返回文件大小
-	// header( 'Accept-Length:'.$file_size );
-	// //这里客户端的弹出对话框
-	// header( 'Content-Disposition:attachment;filename='.$time );
-	// echo fread ( $file_temp, filesize ( $file_path ) );
-	// fclose ( $file_temp );
-	// exit ();
 }
 
 

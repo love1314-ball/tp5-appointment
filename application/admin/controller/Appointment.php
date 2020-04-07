@@ -14,9 +14,9 @@ class Appointment extends AdminBase
         parent::_initialize();
     }
 
+    // 预约/ 订单查看
     public function index()
  {
-
         $order = input( 'order' );
         $phone = input( 'phone' );
         $user_name = input( 'user_name' );
@@ -33,7 +33,6 @@ class Appointment extends AdminBase
             $where['user_name'] = $user_name;
             $status = 1;
         }
-
         if ( $status == 1 ) {
             $all = Db::name( 'order' )->where( $where )->order( 'addtimeymd desc' )->group( 'order' )->select();
         } else {
@@ -44,16 +43,11 @@ class Appointment extends AdminBase
             $all[$k]['status'] = $status['status'];
             $all[$k]['identity'] =  substr_replace( $v['identity'], '****', 5, 9 );
         }
-        // $time = new Time;
-        // $all = $time->order( $all );
         $this->assign( 'all', $all );
-
-        // dump( $all );
-        // exit;
         return $this->fetch( 'index' );
     }
-    //删除订单
 
+    //预约/ 订单查看 / 删除
     public function orderdel()
  {
         $id = input( 'id' );
@@ -65,162 +59,7 @@ class Appointment extends AdminBase
         }
     }
 
-//     //设置页面
-
-//     public function set() 
-//  {
-
-//         $id = 1;
-//         $all = Db::name( 'set' )->where( 'id', $id )->find();
-//         $this->assign( 'all', $all );
-//         return $this->fetch( 'set' );
-//     }
-
-//     //设置更改信息
-
-//     public function setup()
-//  {
-//         $data['poll'] = input( 'poll' );
-//         $data['day'] = input( 'day' );
-//         $id = 1;
-//         $update = Db::name( 'set' )->where( 'id', $id )->update( $data );
-//         if ( $update ) {
-//             $this->success( '更新成功', 'admin/Appointment/set' );
-//         } else {
-//             $this->errorr( '更新失败' );
-//         }
-//     }
-
-//     //时间设置
-
-//     public function time()
-//  {
-//         $up = input( 'up' );
-//         //判断是更新还是增加页面
-//         $id = input( 'id' );
-//         if ( $up == 1 ) {
-//             $all = Db::name( 'time' )->where( 'id', $id )->find();
-//             $time = new Time;
-//             $all = $time->transition( $all );
-//             // dump( $all );
-//             // exit;
-//             $this->assign( 'all', $all );
-//             return $this->fetch( 'time' );
-//         } else {
-//             return $this->fetch( 'time' );
-//         }
-//     }
-
-    //时间插入
-
-//     public function timeadd()
-//  {
-
-//         $id = input( 'id' );
-//         if ( $id ) {
-//             $begin = input( 'begin' );
-//             $time = date( 'Y-m-d', time() );
-//             //这里我要进行变成活的（我可以手动更改的）
-//             $new = $time.$begin;
-//             $data['begin'] = strtotime( $new );
-//             $finish = input( 'finish' );
-//             $new = $time.$finish;
-//             $data['finish'] = strtotime( $new );
-//             $data['ticket'] = input( 'ticket' );
-//             $data['status'] = 0;
-//             $add = Db::name( 'time' )->where( 'id', $id )->update( $data );
-//             if ( $add ) {
-//                 $this->success( '编辑成功', 'admin/Appointment/look' );
-//             } else {
-//                 $this->errorr( '编辑失败' );
-//             }
-//         } else {
-//             $begin = input( 'begin' );
-//             //获取开始时间
-//             $time = date( 'Y-m-d', time() );
-//             //这里我要进行变成活的（我可以手动更改的）
-//             $new = $time.$begin;
-//             //年月日拼接开始时间
-//             $data['begin'] = strtotime( $new );
-//             //时间转为时间戳
-//             // $nowtimes = date( 'Y-m-d H:i:s', $begin );
-//             //时间戳转为时间
-
-//             $finish = input( 'finish' );
-//             $new = $time.$finish;
-//             //年月日拼接开始时间
-//             $data['finish'] = strtotime( $new );
-//             //时间转为时间戳
-
-//             $data['ticket'] = input( 'ticket' );
-//             //票数
-//             $data['status'] = 0;
-//             //状态默认为正常
-
-//             $add = Db::name( 'time' )->insert( $data );
-//             if ( $add ) {
-//                 $this->success( '添加成功', 'admin/Appointment/look' );
-//             } else {
-//                 $this->errorr( '增加失败' );
-//             }
-//         }
-
-//     }
-
-//     //时间查看
-
-//     public function look()
-//  {
-//         $date = input( 'time' );
-//         //条件时间
-//         $all = Db::name( 'time' )->order( 'begin' )->select();
-//         $alls = $all;
-//         //下面要用到
-//         $time = new Time;
-//         $all = $time->switch( $all );
-
-//         $this->assign( 'list', $all );
-//         return $this->fetch( 'look' );
-//     }
-
-//     //时间更改
-
-//     public function timeup()
-//  {
-//         $status = input( 'status' );
-//         $id = input( 'id' );
-//         if ( $status == '1' ) {
-//             $data['status'] = 0;
-//             $update = Db::name( 'time' )->where( 'id', $id )->update( $data );
-//             if ( $update ) {
-//                 $this->success( '更改成功' );
-//             } else {
-//                 $this->errorr( '更改失败' );
-//             }
-//         }
-//         if ( $status == '0' ) {
-//             $data['status'] = 1;
-//             $update = Db::name( 'time' )->where( 'id', $id )->update( $data );
-//             if ( $update ) {
-//                 $this->success( '更改成功' );
-//             } else {
-//                 $this->errorr( '更改失败' );
-//             }
-//         }
-//     }
-//     //删除
-
-//     function timedel()
-//  {
-//         $id = input();
-//         $del = Db::name( 'time' )->delete( $id );
-//         if ( $del ) {
-//             $this->success( '删除成功' );
-//         } else {
-//             $this->errorr( '删除失败' );
-//         }
-//     }
-    //订单查看
+    //预约/ 订单查看 / 查看
 
     public function order() {
         $order = input( 'order' );
@@ -240,15 +79,12 @@ class Appointment extends AdminBase
         return $this->fetch( 'order' );
     }
 
-    //导出内容
+    //预约/ 订单查看 / 导出内容
 
     public function export()
  {
-        //    读取数据+搜索
         $fileName = '订单表' . date( '_YmdHis' );
-        //文档的名字我们也可以跟一个变量这里我写的是一个死值拼接当前时间
         $all = Db::name( 'order' )->alias( 'a' )->join( 'scenic w', 'a.scenicid = w.id', 'left' )->order( 'a.id desc' )->select();
-
         foreach ( $all as $key => $value ) {
             if ( $value['status'] == 0 ) {
                 $all[$key]['status'] = '正常';
@@ -263,7 +99,6 @@ class Appointment extends AdminBase
                 $all[$key]['temperature'] = '发烧';
             }
         }
-
         //查找内容
         $data = '';
         $data = $data .'<table class="bioage" border="2">

@@ -47,9 +47,8 @@
 		<ul class="mui-table-view">
 			{foreach name="time" item="v" key="ke" }
 
-
 			{if $same eq 0}
-			<!-- 如果same为0说明是今天的，如果不是就是下几天的 -->
+				<!-- 如果same为0说明是今天的，如果不是就是下几天的 -->
 				{if $present gt $v.finish}
 				<!-- 如果当前时间大于，finish结束时间，那么我这个无法进行选项 -->
 				<li class="mui-table-view-cell">
@@ -60,50 +59,45 @@
 				</li>
 				{/if}
 
-				{if $v.newticket eq 0}
-				<!-- 如果剩余票数为0显示已售空 -->
-				<li class="mui-table-view-cell">
-					<a>
-						{$v.brgin}-{$v.finish}
-						<span class="mui-badge mui-badge-danger">已售空</span>
-					</a>
-				</li>
-				{/if}
+					{if $v.newticket eq 0}
+					<!-- 如果剩余票数为0显示已售空 -->
+					<li class="mui-table-view-cell">
+						<a>
+							{$v.brgin}-{$v.finish}
+							<span class="mui-badge mui-badge-danger">已售空</span>
+						</a>
+					</li>
+					{/if}
 
-				{if $present lt $v.finish}
-				<!-- $present <  finish -->
-				<!-- 如果当前时间小于，finish结束时间，可以选择 -->
+						{if $present lt $v.finish}
+						<!-- $present <  finish -->
+						<!-- 如果当前时间小于，finish结束时间，可以选择 -->
+						<li class="mui-table-view-cell">
+							<a href="{:url('index/index/appointment', ['timeid' => $v.id , 'sun'=>$sun ])}">
+								{$v.brgin}-{$v.finish}
+								<span class="mui-badge mui-badge-success">剩余{$v.newticket}/张</span>
+							</a>
+						</li>
+						{/if}
+			{/if}
+
+
+				{if $same eq 1}
 				<li class="mui-table-view-cell">
-					<a href="{:url('index/index/appointment', ['timeid' => $v.id , 'sun'=>$sun ])}">
+					<a href="{:url('index/index/appointment', ['timeid' => $v.id , 'sun'=>$sun])}">
 						{$v.brgin}-{$v.finish}
 						<span class="mui-badge mui-badge-success">剩余{$v.newticket}/张</span>
 					</a>
 				</li>
 				{/if}
-			{/if}
-
-
-			{if $same eq 1}
-			<li class="mui-table-view-cell">
-				<a href="{:url('index/index/appointment', ['timeid' => $v.id , 'sun'=>$sun])}">
-					{$v.brgin}-{$v.finish}
-					<span class="mui-badge mui-badge-success">剩余{$v.newticket}/张</span>
-				</a>
-			</li>
-			{/if}
 
 			{/foreach}
 		</ul>
-		{else/}
-		<p class="available">暂无数据</p>
-		{/empty}
+				{else/}
+				<p class="available">暂无数据</p>
+				{/empty}
 	</div>
 	<!-- 内容结束 -->
 </body>
 
 </html>
-<script>
-
-
-
-</script>

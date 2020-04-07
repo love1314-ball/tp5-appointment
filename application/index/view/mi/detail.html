@@ -20,20 +20,20 @@
             < </a>
                 <h1 class="mui-title">订单详细</h1>
     </header>
+
     <div class="mui-content">
         {foreach name="all" item="vo" key="ke" }
         {/foreach}
-      
-       
-        {if $vo.status eq 0}
-        <div class="two-code">
-            <img src="{$vo.code}">
-            <p>请将二维码展示给管理人员</p>
-        </div>
-        {/if}
+            {if $vo.status eq 0}
+            <div class="two-code">
+                <img src="{$vo.code}">
+                <p>请将二维码展示给管理人员</p>
+            </div>
+            {/if}
        
 
         <ul class="mui-table-view detail">
+
             <li class="mui-table-view-cell mui-media massive">
                 <div class="mui-media-body">
                     订单单号：{$vo.order}
@@ -41,30 +41,31 @@
                     <p class='image'><img src="{$vo.img}" alt="{$vo.name}"></p>
                 </div>
             </li>
+
             {foreach name="all" item="v" key="ke" }
-            <li class="mui-table-view-cell mui-media massive">
-                <div class="mui-media-body">
-                    <p class='mui-ellipsis'>下单姓名：{$v.user_name}</p>
-                    <p class='mui-ellipsis'>身份证号：{$v.identity}</p>
-                    <p class='mui-ellipsis'>下单时间：{$v.addtime}</p>
-                    <p class='mui-ellipsis'>有效日期：<span class="begin-finish">{$v.brgin}~{$v.finish}</span></p>
-                    <p class='mui-ellipsis'>票数：x{$v.ticket}</p>
-                    <p class='mui-ellipsis'>是否发烧：
-                        {if $v.temperature eq 0}
-                        否
-                        {else/}
-                        是
-                        {/if}
-                    </p>
-                    <p class='mui-ellipsis'>状态：
-                        {if $v.status eq 0}
-                        正常
-                        {else/}
-                        已销毁
-                        {/if}
-                    </p>
-                </div>
-            </li>
+                <li class="mui-table-view-cell mui-media massive">
+                    <div class="mui-media-body">
+                        <p class='mui-ellipsis'>下单姓名：{$v.user_name}</p>
+                        <p class='mui-ellipsis'>身份证号：{$v.identity}</p>
+                        <p class='mui-ellipsis'>下单时间：{$v.addtime}</p>
+                        <p class='mui-ellipsis'>有效日期：<span class="begin-finish">{$v.brgin}~{$v.finish}</span></p>
+                        <p class='mui-ellipsis'>票数：x{$v.ticket}</p>
+                        <p class='mui-ellipsis'>是否发烧：
+                            {if $v.temperature eq 0}
+                            否
+                            {else/}
+                            是
+                            {/if}
+                        </p>
+                        <p class='mui-ellipsis'>状态：
+                            {if $v.status eq 0}
+                            正常
+                            {else/}
+                            已销毁
+                            {/if}
+                        </p>
+                    </div>
+                </li>
             {/foreach}
         </ul>
 
