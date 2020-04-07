@@ -13,27 +13,38 @@
 		<table class="layui-table layui-form">
 			<thead>
 				<tr>
-					<th>ID</th>
 					<th>景点名字</th>
 					<th>图片</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>{$all.name}</td>
+					<td class="image">
+						<img src="{$all.img}" alt="{$all.name}">
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<br>
+		<br>
+
+
+		<table class="layui-table layui-form">
+			<thead>
+				<tr>
 					<th>时间段</th>
 					<th>购买数量</th>
 				</tr>
 			</thead>
 			<tbody>
-                {foreach name="quantum" item="v" empty="$empty"}
-                <tr>
-					<td>{$v.id}</td>
-					<td>{$all.name}</td>
-					<td class="image">
-						<img src="{$all.img}" alt="{$all.name}">
-					</td>
-					<td>{$v.begin} ~ {$v.finish}</td>
-					<td>{$v.purchase}</td>
+				{foreach name="quantum" item="v" empty="$empty"}
+				<tr>
+					<td>{$v.brgin} ~ {$v.finish}</td>
+					<td>{$v.purchase} /张</td>
 				</tr>
 				{/foreach}
 			</tbody>
-		</table>
 	</div>
 </div>
 {/block}

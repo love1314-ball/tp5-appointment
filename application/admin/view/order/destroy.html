@@ -12,11 +12,11 @@
     <div class="layui-card-body">
 
         <div class="layui-card-header">
-            <form action="{:url('admin/Order/index')}" class="layui-form" method="get">
+            <form action="{:url('admin/Order/destroy')}" class="layui-form" method="get">
                 <div class="layui-form-item">
 
                     <div class="layui-input-inline">
-                        <input type="number" name="orderid" value="" placeholder="填写订单"  class="layui-input">
+                        <input type="number" name="order" value="" placeholder="填写订单"  class="layui-input">
                     </div>
 
                     <div class="layui-input-inline">
@@ -24,7 +24,7 @@
                     </div>
 
                     <div class="layui-input-inline">
-                        <select name="cid">
+                        <select name="scenic">
                             <option value="">选择景点</option>
                             {foreach name="scenic" item="v" empty="$empty"}
                             <option value="{$v.id}"> {$v.name}</option>
@@ -55,7 +55,29 @@
 				</tr>
 			</thead>
 			<tbody>
-				
+                {foreach name="order" item="v" empty="$empty"}
+				<tr>
+                    <td>{$v.id}</td>
+                    <td>{$v.name}</td>
+                    <td>{$v.order}</td>
+                    <td>{$v.begin}</td>
+                    <td>{$v.finish}</td>
+                    <td>
+                        {if $v.status eq 0}正常
+							{else/}已销毁{/if}
+                    </td>
+                    <td>
+						<a href="{:url('admin/Order/status', ['order' => $v.order , 'status'=> $v.status])}"
+							class="layui-btn layui-btn-xs layui-btn-normal"><i class="fa fa-edit"></i> 
+							更改状态</a>
+
+						<a href="{:url('admin/Order/orderdel', ['id' => $v.id] )}"
+							class="layui-btn layui-btn-xs layui-btn-danger ajax-delete"><i class="fa fa-trash-o"></i>
+							删除</a>
+					</td>
+                    
+				</tr>
+				{/foreach}
 			</tbody>
 		</table>
 

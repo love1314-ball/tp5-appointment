@@ -53,35 +53,70 @@ class Order extends AdminBase
     }
 
     //核销销毁订单
+
     public function destroy()
-    {   
-        $period = input('period');
-        if ($period) {
+ {
+
+        $period = input( 'period' );
+        if ( $period ) {
             $period = $period;
-        }else {
-            $period = date('Y-m-d',time());
+        } else {
+            $period = date( 'Y-m-d', time() );
         }
-        
-        $scenic = Db::name('scenic')->select();
-
         $where['addtimeymd'] = $period;
-        $order = Db::name('order')->where($where)->group('order')->select();
 
-        dump($order);exit;   
+        $order = input( 'order' );
+        if ( $order ) {
+            $where['order'] = $order;
+        }
+        $scenic = input( 'scenic' );
+        if ( $scenic ) {
+            $where['scenicid'] = $scenic;
+        }
 
-        $this->assign('scenic',$scenic);
-        $this->assign('period',$period);
+        $scenic = Db::name( 'scenic' )->select();
+
+        $order = Db::name( 'order' )->where( $where )->group( 'order' )->select();
+        foreach ( $order as $key => $value ) {
+            $time = Db::name( 'times' )->where( 'id', $order[$key]['timeid'] )->find();
+            $order[$key]['name'] = Db::name( 'scenic' )->where( 'id', $order[$key]['scenicid'] )->value( 'name' );
+            $order[$key]['begin'] = $value['addtimeymd']. ' '.$time['brgin'];
+            $order[$key]['finish'] = $time['finish'];
+        }
+        $this->assign( 'scenic', $scenic );
+        $this->assign( 'period', $period );
+        $this->assign( 'order', $order );
+
         return $this->fetch( 'destroy' );
     }
 
-    //订单销毁执行
-    public function destroyup()
-    {
-        
-        
+    //订单状态更改
+
+    public function status()
+ {
+        $status = input( 'status' );
+        $order = input( 'order' );
+        if ( $status == 1 ) {
+            $data['status'] = 0;
+        } else {
+            $data['status'] = 1;
+        }
+
+        $all = Db::name('order')->where('order',$order)->select();
+        foreach ($all as $key => $value) {
+            Db::name( 'order' )->where( 'id', $value['id'] )->update( $data );
+        }
+        $this->success( '更改成功', 'admin/Order/destroy' );
     }
 
+    //订单删除
 
+    public function orderdel()
+ {
+        $id = input( 'id' );
+        $del = Db::name( 'order' )->delete( $id );
+        $this->success( '删除', 'admin/Order/destroy' );
 
+    }
 
 }

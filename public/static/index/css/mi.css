@@ -1,12 +1,38 @@
-.order{
+.order {
 	margin-bottom: 18%;
 }
 
-.begin{
+.begin {
 	color: #00CC00;
 	font-size: 0.7em;
 }
-.finish{
-	color:red;
-	font-size:0.7em;
+
+.finish {
+	color: red;
+	font-size: 0.7em;
+}
+
+.status {
+	margin-left: 90px;
+}
+.content{
+	margin-bottom: 15%;
+}
+.order {
+	margin-left: 2%;
+	margin-top: 4%;
+	margin-bottom: 4%;
+	color: rosybrown;
+}
+.personage{
+	margin-left: 2%;
+	margin-top: 8%;
+	margin-bottom: 2%;
+	color: rosybrown;
+}
+.admin{
+	margin-top: 3%;
+}
+.mui-table-view a{
+	color: black;
 }

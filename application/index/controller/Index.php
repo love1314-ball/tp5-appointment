@@ -36,7 +36,7 @@ class Index extends IndexBase {
         /*
         获取时间信息的
         */
-        $all = Db::name( 'set' )->where( 'id', 1 )->find();
+        $all = Db::name( 'scenic' )->where( 'id', $scenicid )->find();
         $day = $all['day'];
         $date = date( 'Y-m-d', time() );
         //获取当天日期
@@ -52,20 +52,12 @@ class Index extends IndexBase {
         $data = Db::name( 'scenic' )->where( 'id', $scenicid )->find();
         $timeid = $data['timeid'];
         $timeid = explode( ',', $timeid );
-        $data = Db::name( 'time' )->order( 'begin' )->select();
-        foreach ( $data as $key => $value ) {
-            $data[$key]['output'] = 0;
-            //当output为0的时候不可选择，我们后台没有选择他然后就无法选择了
-            for ( $i = 0; $i <count( $timeid ) ;
-            $i++ ) {
-                if ( $timeid[$i] == $value['id'] ) {
-                    $data[$key]['output'] = 1;
-                    //当output为1的时候输出
-                }
-            }
+        
+        for ($i=0; $i < count($timeid) ; $i++) { 
+            $time[] = Db::name('times')->where('id',$timeid[$i])->find();
         }
-        $time = new Time;
-        $data = $time->transforms( $data );
+        
+        
         /*
         默认输出时间段结束
         */
@@ -87,6 +79,8 @@ class Index extends IndexBase {
             $sun = $year.date( 'm-d', time() );
         }
 
+        
+
         /*
         判断当天的还是下n天的
         */
@@ -99,27 +93,28 @@ class Index extends IndexBase {
         }
         //查找订单时间为当日，或者选择的日期
 
+
         //所有的票数，和时间点（少一个条件，商品的id。否则不知道哪个商品了）
-        foreach ( $data as $k => $v ) { 
+        foreach ( $time as $k => $v ) { 
             $where['timeid'] = $v['id'];
             $timeid = $v['id'];
             $where['addtimeymd'] = $sun;
             $where['scenicid'] = $scenicid;
-            $data[$k]['subtract'] = Db::name( 'order' )->where( $where )->count();
+            $time[$k]['subtract'] = Db::name( 'order' )->where( $where )->count();
             //这是所购买的票数，让我们来相减
-            $data[$k]['newticket'] = $v['ticket'] - $data[$k]['subtract'];
+            $time[$k]['newticket'] = $v['ticket'] - $time[$k]['subtract'];
             //计算出的新的票数
         }
-        // dump( $where );
+        // dump( $present );
         // dump( $data );
         // exit;
         $this->assign( 'same', $same );
         $this->assign( 'present', $present );
-        $this->assign( 'data', $data );
         $this->assign( 'sun', $sun );
         $this->assign( 'list', $list );
         //获取的是几天信息
         $this->assign( 'all', $all );
+        $this->assign('time',$time);
         //获取时间信息的
         return $this->fetch( 'time' );
     }

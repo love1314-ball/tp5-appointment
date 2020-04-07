@@ -1,14 +1,30 @@
-.begin-finish{
+.begin-finish {
     font-size: 0.8em;
     color: red;
 }
-.image img{
+
+.image img {
     widows: 150px;
     height: 150px;
 }
-.detail{
-    margin-bottom: 10%;
+
+.detail {
+    margin-bottom: 15%;
 }
-.massive{
+
+.massive {
     margin-bottom: 5%;
+}
+
+.two-code {
+    text-align: center;
+    margin-top: 2%;
+    margin-bottom: 2%;
+    color: red;
+  
+}
+
+.two-code img{
+    width: 150px;
+    height: 150px;
 }

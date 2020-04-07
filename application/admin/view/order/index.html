@@ -30,7 +30,7 @@
                     <tbody>
                         <tr>
                             <td style="width:50%;">总售票数:</td>
-                            <td style="width:50%;">{$number} /个</td>
+                            <td style="width:50%;">{$number} /张</td>
                         </tr>
                         {foreach name="all" item="v" empty="$empty"}
                         <tr>
@@ -38,7 +38,7 @@
                             <sapn class="name"> {$v.name}:</sapn>
                                 <img src="{$v.img}" alt="{$v.name}" width="100px" height="45px">
                             </td>
-                            <td>{$v.statistics} /个</td>
+                            <td>{$v.statistics} /张</td>
                         </tr>
                         {/foreach}
                     </tbody>

@@ -30,13 +30,23 @@
         color: #004974;
         text-decoration: none;
     }
+
+    .left {
+        margin-left: 5%;
+    }
+
+    .time {
+        width: 770px;
+        height: auto;
+        background-color: antiquewhite;
+    }
 </style>
 <div class="layui-card">
     <div class="layui-card-header">规定时间段</div>
     <div class="layui-card-body">
         <form action="{:url('admin/Scenic/ins')}" class="layui-form" method="post" enctype="multipart/form-data">
-
-            {empty name="scenic"}
+            
+            {empty name="id"}
             <!-- 增加页面 -->
             <div class="layui-form-item">
                 <label class="layui-form-label">景点图片：</label>
@@ -44,7 +54,6 @@
                     <input class="file" type="file" name="picture">
                 </div>
             </div>
-
 
             <div class="layui-form-item maximum">
                 <label class="layui-form-label">景点名字：</label>
@@ -57,32 +66,75 @@
             <div class="layui-form-item maximum">
                 <label class="layui-form-label">景点介绍:</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="introduce" value="" placeholder="景点介绍" required="required" class="layui-input">
+                    <textarea name="introduce" required lay-verify="required" placeholder="请输入"
+                        class="layui-textarea"></textarea>
                 </div>
                 <div class="layui-form-mid layui-word-aux">景点的介绍</div>
             </div>
 
-
-
             <div class="layui-form-item">
-                <label class="layui-form-label">时间区间：</label>
-                <div class="layui-input-block">
-                    {foreach name="all" item="v" empty="$empty"}
-                    <input type="checkbox" name="timeid[]" value="{$v.id}" title="{$v.begin} ~ {$v.finish}"><br>
-                    {/foreach}
+                <label class="layui-form-label">单购票数：</label>
+                <div class="layui-input-inline">
+                    <input type="number" name="poll" placeholder="输入票数" required="required" class="layui-input">
                 </div>
+                <div class="layui-form-mid layui-word-aux">设置单次购买票数<i onclick="ticket()" class="explain"><img
+                            src="/static/image/tishi.png" alt="说明"></i></div>
             </div>
 
+            <div class="layui-form-item">
+                <label class="layui-form-label">规定天数：</label>
+                <div class="layui-input-inline">
+                    <input type="number" name="day" placeholder="输入天数" required="required" class="layui-input">
+                </div>
+                <div class="layui-form-mid layui-word-aux">设置预约<i onclick="day()" class="explain"><img
+                            src="/static/image/tishi.png" alt="说明"></i></div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">规定总票：</label>
+                <div class="layui-input-inline">
+                    <input type="number" name="ticket" placeholder="输入景区总票数" required="required" class="layui-input">
+                </div>
+                <div class="layui-form-mid layui-word-aux">设置景点总票数</div>
+            </div>
+
+            <!-- 增加时间段的设计 -->
+            <div class="quantum">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">开始时间:</label>
+                    <div class="layui-input-inline">
+                        <input type="time" name="brgin[]" value="" placeholder="设置开始时间" required="required"
+                            class="layui-input">
+                    </div>
+                    <div class="layui-form-mid layui-word-aux">设置活动开始时间<i onclick="explain()" class="explain"><img
+                                src="/static/image/tishi.png" alt="说明"></i></div>
+
+                    <label class="layui-form-label">结束时间:</label>
+                    <div class="layui-input-inline">
+                        <input type="time" name="finish[]" value="" placeholder="设置结束时间" required="required"
+                            class="layui-input">
+                    </div>
+                    <div class="layui-form-mid layui-word-aux">设置活动结束时间<i onclick="over()" class="explain"><img
+                                src="/static/image/tishi.png" alt="说明"></i></div>
+                </div>
+            </div>
+            <button type="button" class="layui-btn layui-btn-normal left" id="add">增加时间规则</button>
+            <button type="button" class="layui-btn layui-btn-danger" id="reduce">删除时间规则</button><br><br>
+           
             {else /}
             <!-- 编辑页面 -->
+
             <input type="hidden" name="id" value="{$id}" id="">
+            
             <div class="layui-form-item">
                 <label class="layui-form-label">景点图片：</label>
                 <div class="layui-input-block">
-                    <input type="text" name="former" readonly  value="{$scenic.img}"  class="layui-input"><p>不选为之前默认(如果跟新的点击选择文件在选择一张即可)</p>
+                    <input type="text" name="former" readonly value="{$scenic.img}" class="layui-input">
+                    <p>不选为之前默认(如果跟新的点击选择文件在选择一张即可)</p>
                     <input class="file" type="file" name="picture">
                 </div>
             </div>
+
             <div class="layui-form-item maximum">
                 <label class="layui-form-label">景点名字：</label>
                 <div class="layui-input-inline">
@@ -94,23 +146,65 @@
 
 
             <div class="layui-form-item maximum">
-                <label class="layui-form-label">景点名字：</label>
+                <label class="layui-form-label">景点介绍:</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="name" value="{$scenic.introduce}" placeholder="景点的介绍" required="required"
-                        class="layui-input">
+                    <textarea name="introduce" required lay-verify="required" placeholder="请输入"
+                        class="layui-textarea">{$scenic.introduce}</textarea>
                 </div>
-                <div class="layui-form-mid layui-word-aux">对景点的介绍</div>
+                <div class="layui-form-mid layui-word-aux">景点的介绍</div>
             </div>
 
             <div class="layui-form-item">
-                <label class="layui-form-label">时间区间：</label>
-                <div class="layui-input-block">
-                    {foreach name="all" item="v" empty="$empty"}
-                    <input type="checkbox" name="timeid[]" value="{$v.id}" title="{$v.begin} ~ {$v.finish}" {if $v.pitch
-                        eq 1}checked {/if}><br>
-                    {/foreach}
+                <label class="layui-form-label">单购票数：</label>
+                <div class="layui-input-inline">
+                    <input type="number" name="poll" value="{$scenic.poll}" placeholder="输入票数" required="required" class="layui-input">
                 </div>
+                <div class="layui-form-mid layui-word-aux">设置单次购买票数<i onclick="ticket()" class="explain"><img
+                            src="/static/image/tishi.png" alt="说明"></i></div>
             </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">规定天数：</label>
+                <div class="layui-input-inline">
+                    <input type="number" name="day" value="{$scenic.day}" placeholder="输入天数" required="required" class="layui-input">
+                </div>
+                <div class="layui-form-mid layui-word-aux">设置预约<i onclick="day()" class="explain"><img
+                            src="/static/image/tishi.png" alt="说明"></i></div>
+            </div>
+
+
+            {foreach name="time" item="v" empty="$empty"}
+            {/foreach}
+            <div class="layui-form-item">
+                <label class="layui-form-label">规定总票：</label>
+                <div class="layui-input-inline">
+                    <input type="number" name="ticket" value="{$v.ticket}" placeholder="输入景区总票数" required="required" class="layui-input">
+                </div>
+                <div class="layui-form-mid layui-word-aux">设置景点总票数</div>
+            </div>
+
+            <!-- 增加时间段的设计 -->
+            <div class="quantum">
+                {foreach name="time" item="vo" empty="$empty"}
+                <div class="layui-form-item">
+                    <label class="layui-form-label">开始时间:</label>
+                    <div class="layui-input-inline">
+                        <input type="time" name="brgin[]" value="{$vo.brgin}" placeholder="设置开始时间" required="required"
+                            class="layui-input">
+                    </div>
+                    <div class="layui-form-mid layui-word-aux">设置活动开始时间</div>
+
+                    <label class="layui-form-label">结束时间:</label>
+                    <div class="layui-input-inline">
+                        <input type="time" name="finish[]" value="{$vo.finish}" placeholder="设置结束时间" required="required"
+                            class="layui-input">
+                    </div>
+                    <div class="layui-form-mid layui-word-aux">设置活动结束时间</div>
+                </div>
+                {/foreach}
+            </div>
+            <button type="button" class="layui-btn layui-btn-normal left" id="add">增加时间规则</button>
+            <button type="button" class="layui-btn layui-btn-danger" id="reduce">删除时间规则</button><br><br>
 
             {/empty}
             <div class="layui-form-item">
@@ -122,4 +216,53 @@
         </form>
     </div>
 </div>
+
+
+<!-- 增加时间段js -->
+<script>
+    var number = 0;
+    var maximum = document.querySelector('.quantum'); //找到最大的div
+    var add = document.querySelector('#add'); //找到第三个第一个按钮
+    add.onclick = function () {
+        var newly = document.createElement('div');
+        maximum.appendChild(newly);
+        number++;
+        newly.innerHTML =
+            `<div class="layui-form-item">
+                <label class="layui-form-label">开始时间:</label>
+                <div class="layui-input-inline">
+                    <input type="time" name="brgin[]" value="" placeholder="设置开始时间" required="required"
+                        class="layui-input">
+                </div>
+                <div class="layui-form-mid layui-word-aux">设置活动开始时间</div>
+
+                <label class="layui-form-label">结束时间:</label>
+                <div class="layui-input-inline">
+                    <input type="time" name="finish[]" value="" placeholder="设置结束时间" required="required"
+                        class="layui-input">
+                </div>
+                <div class="layui-form-mid layui-word-aux">设置活动结束时间</div>
+            </div> `;
+    }
+    var reduce = document.querySelector('#reduce'); //找到最后一个按钮
+    reduce.onclick = function () {
+        var last = maximum.lastElementChild;
+        maximum.removeChild(last); //删除节点
+    }
+
+
+    //提示信息
+    function explain() {
+        layer.alert('这是这个景点某个开始订票时间');
+    }
+    function over() {
+        layer.alert('这是这个景点某个结束订票时间');
+    }
+    function ticket() {
+        layer.alert('每次最大限购票数(最好不大于6)');
+    }
+    function day() {
+        layer.alert('可以预定最近几天(最好不大于3天)');
+    }
+</script>
 {/block}

@@ -23,8 +23,10 @@
             {foreach name="all" item="v" empty="$empty"}
             <a class="list-left scenic" href="{:url('index/index/time',['id'=>$v.id])}">
                 <div class="image">
-                    <img src="{$v.img}" alt=""><br>
-                    {$v.name}
+                    <span class="name">{$v.name}</span><br>
+                    <img src="{$v.img}" alt="">
+                    <p>介绍：{$v.introduce}</p>
+                   
                 </div>
             </a>
             {/foreach}
